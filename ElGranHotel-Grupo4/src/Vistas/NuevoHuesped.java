@@ -67,6 +67,7 @@ public class NuevoHuesped extends javax.swing.JInternalFrame {
             id_huesped = hd.registrarHuesped(huesped); //Obtengo el ID del huesped
 
         } catch (Exception e) {
+            System.out.println("error en registrarHuesped");
         }
 
     }

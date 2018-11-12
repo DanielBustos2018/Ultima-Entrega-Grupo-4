@@ -122,6 +122,7 @@ public class ModificarHabitacion extends javax.swing.JInternalFrame {
 
             //System.out.println("el id de la habitacion es: " + id_hab);
         } catch (Exception e) {
+            System.out.println("error en mostrarDatosHabitacion");
         }
     }
 
@@ -137,6 +138,7 @@ public class ModificarHabitacion extends javax.swing.JInternalFrame {
             }
 
         } catch (Exception e) {
+            System.out.println("error en mostrarTipos");
         }
     }
 
@@ -179,6 +181,7 @@ public class ModificarHabitacion extends javax.swing.JInternalFrame {
             nueva.editar(id_tipohab, numero, piso, estado, id_hab);
 
         } catch (Exception e) {
+            System.out.println("error en guardarDatos");
         }
 
     }

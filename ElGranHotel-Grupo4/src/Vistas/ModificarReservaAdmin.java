@@ -65,6 +65,7 @@ public class ModificarReservaAdmin extends javax.swing.JInternalFrame {
             //System.out.println("el id de la habitacion es: " + id_hab);
 
         } catch (Exception e) {
+            System.out.println("error en mostrtarDatosReserva");
         }
     }
 
@@ -89,6 +90,7 @@ public class ModificarReservaAdmin extends javax.swing.JInternalFrame {
             //System.out.println("el costo total es: " + costototal);
 
         } catch (Exception e) {
+            System.out.println("error en calculoImporte");
         }
     }
 
@@ -200,9 +202,9 @@ public class ModificarReservaAdmin extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
+        jPanel1.setBackground(new java.awt.Color(153, 153, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Modificación de Reserva"));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -366,7 +368,7 @@ public class ModificarReservaAdmin extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
@@ -399,9 +401,9 @@ public class ModificarReservaAdmin extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -469,6 +471,7 @@ public class ModificarReservaAdmin extends javax.swing.JInternalFrame {
             br.setVisible(true);
 
         } catch (Exception e) {
+            System.out.println("error en boton guardar");
         }
 
 

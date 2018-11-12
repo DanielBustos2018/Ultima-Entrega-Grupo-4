@@ -51,6 +51,7 @@ public class BuscarHuespedes extends javax.swing.JInternalFrame {
 
             tablahabitaciones.setModel(modelo);           
         } catch (Exception e) {
+            System.out.println("error en mostrarTodos");
         }
     }
     
@@ -66,6 +67,7 @@ public class BuscarHuespedes extends javax.swing.JInternalFrame {
 
             tablahabitaciones.setModel(modelo);           
         } catch (Exception e) {
+            System.out.println("error en mostrarLibres");
         }
     }
     
@@ -81,6 +83,7 @@ public class BuscarHuespedes extends javax.swing.JInternalFrame {
 
             tablahabitaciones.setModel(modelo);           
         } catch (Exception e) {
+            System.out.println("error en mostrarOcupadas");
         }
     }
     
@@ -94,6 +97,7 @@ public class BuscarHuespedes extends javax.swing.JInternalFrame {
             
             tablahabitaciones.setModel(model);           
         } catch (Exception e) {
+            System.out.println("error en mostrarPorTipo");
         }
     }
     
@@ -108,6 +112,7 @@ public class BuscarHuespedes extends javax.swing.JInternalFrame {
             
             tablahabitaciones.setModel(model);           
         } catch (Exception e) {
+            System.out.println("error en mostrarPorPiso");
         }
     }
     
@@ -120,6 +125,7 @@ public class BuscarHuespedes extends javax.swing.JInternalFrame {
             elim.eliminarHuesped(id_hues);
 
         } catch (Exception e) {
+            System.out.println("error en eliminarHuesped");
         }
     }
     
@@ -136,9 +142,9 @@ public class BuscarHuespedes extends javax.swing.JInternalFrame {
         btneliminarhabitacion = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setClosable(true);
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 102));
+        jPanel1.setBackground(new java.awt.Color(153, 153, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Huespedes"));
 
         tablahabitaciones.setModel(new javax.swing.table.DefaultTableModel(

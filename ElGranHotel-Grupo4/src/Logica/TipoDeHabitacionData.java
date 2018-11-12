@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//                         EL GRAN HOTEL - GRUPO 4                            //
+//                                                                            //
+//   YAMILE BUNINO - FLORENCIA BORDAGORRY - BUSTOS DANIEL - BERTERO RODOLFO   //
+//                                                                            //
+//                      CLASE TIPO DE HABITACION DATA                         //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
 
 package Logica;
 
@@ -16,13 +25,12 @@ import javax.swing.table.DefaultTableModel;
 public class TipoDeHabitacionData {
     String sql = "";
     private Connection con = null;
-    public Integer totalregistros;
     
     public TipoDeHabitacionData(Conexion conexion){
         try {
             con = conexion.conectar();
         } catch (Exception e) {
-            System.out.println("Error al obtener la conexion para Tipos de habitacion");
+            JOptionPane.showMessageDialog(null, "No se ha podido establecer la conexion con la base de datos (TipoDeHabitacion Data) error: " + e);
         }
     }
     
@@ -39,12 +47,10 @@ public class TipoDeHabitacionData {
             ps.setString(4, tipocama);
             ps.setDouble(5, precionoche);
 
-            ps.setInt(6, id_tipohab);
-
+            ps.setInt(6, id_tipohab);           
             ps.executeUpdate();
-
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);
         }
     }
     
@@ -56,22 +62,20 @@ public class TipoDeHabitacionData {
         sql = "SELECT * FROM tipos_de_habitacion WHERE id_tipoHabitacion =" + id_tip ;
 
         try {
-
             Statement ps = con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
             
             //Si existe este huesped, entonces se ingresara al siguiente WHILE:
-            while (rs.next()) {
-                
+            while (rs.next()) {               
                 tipohabi.setId_tipoHabitacion(rs.getInt("id_tipoHabitacion"));
                 tipohabi.setTipo(rs.getString("tipo"));
                 tipohabi.setCapacidad(rs.getInt("capacidad"));
                 tipohabi.setCantidad_camas(rs.getInt("cantidad_camas"));
                 tipohabi.setTipo_cama(rs.getString("tipo_cama"));
                 tipohabi.setPrecio_noche(rs.getDouble("precio_noche"));
-
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
         return tipohabi;
     }
@@ -80,21 +84,15 @@ public class TipoDeHabitacionData {
     //El siguiente método permite buscar retornar el listado de habitaciones disponibles a partir de su tipo, en una tabla (retorna una tabla):
     public DefaultTableModel buscardisponibles(int cantidad) {
 
-        DefaultTableModel modelo;
-        
+        DefaultTableModel modelo;   
         String[] titulos = {"ID","Tipo","Capacidad","Cantidad de camas","Tipo de cama", "Precio x noche"};    //Defino los nombres de las columnas de la tabla
-
         String[] registro = new String[6];  //Defino rgistro que ira guardando las filas con 3 parametros
-
-        totalregistros = 0;
         modelo = new DefaultTableModel(null, titulos);
-
         sql = "SELECT * FROM tipos_de_habitacion WHERE capacidad >= ? ";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, cantidad);
-            
+            ps.setInt(1, cantidad);            
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -105,25 +103,22 @@ public class TipoDeHabitacionData {
                 registro[4] = rs.getString("tipo_cama");
                 registro[5] = rs.getString("precio_noche");
 
-                totalregistros = totalregistros + 1;
                 modelo.addRow(registro);
             }
-            return modelo;
+           
 
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
-            System.out.println("error tiposdehabitaciondata metodo buscar disponibles");
+            JOptionPane.showMessageDialog(null, e);
             return null;
         }
+        return modelo;
     }
     
     
     //El siguiente método permite mostrar todos los tipos de habitacion ordendor por el precio de menor a mayor:
     public DefaultTableModel mostrarPMenorMayor() {
         DefaultTableModel modelo;
-
         String[] titulos = {"ID", "Tipo", "Capacidad" , "Cantidad de camas", "Tipo de cama", "Precio por noche"};
-
         String[] registro = new String[6];
 
         modelo = new DefaultTableModel(null, titulos);
@@ -145,12 +140,10 @@ public class TipoDeHabitacionData {
 
                 modelo.addRow(registro);
             }
-            return modelo;
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-            return null;
         } 
+        return modelo;
     }
     
     
@@ -160,16 +153,12 @@ public class TipoDeHabitacionData {
         DefaultTableModel modelo;
 
         String[] titulos = {"ID", "Tipo", "Capacidad" , "Cantidad de camas", "Tipo de cama", "Precio por noche"};
-
         String[] registro = new String[6];
-
         modelo = new DefaultTableModel(null, titulos);
-        
         sql = "SELECT * FROM tipos_de_habitacion ORDER BY precio_noche DESC";
         
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            
+            PreparedStatement ps = con.prepareStatement(sql);            
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -182,12 +171,11 @@ public class TipoDeHabitacionData {
 
                 modelo.addRow(registro);
             }
-            return modelo;
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
             return null;
-        } 
+        }
+        return modelo;
     }
     
     
@@ -196,16 +184,12 @@ public class TipoDeHabitacionData {
         DefaultTableModel modelo;
 
         String[] titulos = {"ID", "Tipo", "Capacidad" , "Cantidad de camas", "Tipo de cama", "Precio por noche"};
-
         String[] registro = new String[6];
-
         modelo = new DefaultTableModel(null, titulos);
-        
         sql = "SELECT * FROM tipos_de_habitacion ORDER BY capacidad ASC";
         
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            
+            PreparedStatement ps = con.prepareStatement(sql);            
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -218,12 +202,10 @@ public class TipoDeHabitacionData {
 
                 modelo.addRow(registro);
             }
-            return modelo;
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-            return null;
         } 
+         return modelo;
     }
     
     
@@ -233,18 +215,13 @@ public class TipoDeHabitacionData {
         DefaultTableModel modelo;
 
         String[] titulos = {"ID", "Tipo", "Capacidad" , "Cantidad de camas", "Tipo de cama", "Precio por noche"};
-
         String[] registro = new String[6];
-
-        modelo = new DefaultTableModel(null, titulos);
-        
+        modelo = new DefaultTableModel(null, titulos);     
         sql = "SELECT * FROM tipos_de_habitacion ORDER BY capacidad DESC";
         
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            
+            PreparedStatement ps = con.prepareStatement(sql); 
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 registro[0] = rs.getString("id_tipoHabitacion");
                 registro[1] = rs.getString("tipo");
@@ -252,15 +229,13 @@ public class TipoDeHabitacionData {
                 registro[3] = rs.getString("cantidad_camas");
                 registro[4] = rs.getString("tipo_cama");
                 registro[5] = rs.getString("precio_noche");
-
                 modelo.addRow(registro);
             }
-            return modelo;
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
             return null;
-        } 
+        }
+        return modelo;
     }
     
     
@@ -269,18 +244,13 @@ public class TipoDeHabitacionData {
     //El siguiente método permite mostrar todos los tipos de habitacion:
     public DefaultTableModel mostrartodos() {
         DefaultTableModel modelo;
-
         String[] titulos = {"ID", "Tipo", "Capacidad" , "Cantidad de camas", "Tipo de cama", "Precio por noche"};
-
         String[] registro = new String[6];
-
-        modelo = new DefaultTableModel(null, titulos);
-        
+        modelo = new DefaultTableModel(null, titulos);      
         sql = "SELECT * FROM tipos_de_habitacion ORDER BY id_tipoHabitacion";
         
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            
+            PreparedStatement ps = con.prepareStatement(sql);            
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -293,19 +263,17 @@ public class TipoDeHabitacionData {
 
                 modelo.addRow(registro);
             }
-            return modelo;
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-            return null;
         } 
+        return modelo;
     }
     
     
     
     public double buscarPrecio(int id_tipo) {
         double costo = 0;
-        //Habitacion hues = new Habitacion(); //Instancio un objeto tipo Huesped para almacenar los datos leidos
         sql = "SELECT precio_noche FROM tipos_de_habitacion WHERE id_tipoHabitacion = " + id_tipo;
 
         try {
@@ -316,10 +284,9 @@ public class TipoDeHabitacionData {
             //Si existe este huesped, entonces se ingresara al siguiente WHILE:
             while (rs.next()) {
                 costo = rs.getDouble("precio_noche");
-
-                //System.out.println(hues.getId_huesped() + hues.getApellido() + hues.getNombre() + hues.getDni());
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
         return costo;
     }
@@ -350,11 +317,10 @@ public class TipoDeHabitacionData {
         } catch (SQLException ex) {
             System.out.println("Error al obtener los tipos: " + ex.getMessage());
         }
-
         return tipos;
     }
     
-    //El siguiente método permitirá insertar un nuevo tipo de habitacion:
+    //El siguiente método permite insertar un nuevo tipo de habitacion:
     public void insertar(String tipo, int capacidad, int cant_cam, String tipocama, double precionoche) {
         sql = "INSERT INTO tipos_de_habitacion (tipo, capacidad, cantidad_camas, tipo_cama, precio_noche) VALUES ( ? , ? , ? , ? , ? )";
 
@@ -365,25 +331,21 @@ public class TipoDeHabitacionData {
             ps.setInt(3, cant_cam);
             ps.setString(4, tipocama);
             ps.setDouble(5, precionoche);
-
             ps.executeUpdate();
-
 
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
         }
     }
+
     
-    
-    
-    //El siguiente método permitirá eliminar un tipo de habitacion:
+    //El siguiente método permite eliminar un tipo de habitacion dado por su ID:
     public void eliminar(int id_tipohab) {
         sql = "DELETE FROM tipos_de_habitacion WHERE id_tipoHabitacion = ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id_tipohab);
-
             ps.executeUpdate();
 
         } catch (Exception e) {

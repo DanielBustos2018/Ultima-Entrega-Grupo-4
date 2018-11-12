@@ -50,28 +50,13 @@ public class BuscarReserva extends javax.swing.JInternalFrame {
 
             DefaultTableModel modelo;
             modelo = todas.mostrartodas();
-            
-            String fs;
-            Date fsa;
-            /*
-            //Aqui habilitare las habitaciones de las reservas que ya han caducado.
-            //Debo recorrer el modelo y cada fecha de salida convertirla a Date para compararla con la fecha actual:
-            for (int i = 0; i < modelo.getRowCount(); i++) {
-                fs = (String) modelo.getValueAt(i, 4);
-                //a continuacion convierto la fecha a Date:
-                DateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
-                fsa = formatter.parse(fs);
-                
-                
-                System.out.println("fecha sa fs: "+fsa);
-            }
 
-            //primero controlo la fecha de salida de cada reserva y la comparo con la actual para ver si es menor:
-            */
             tablareservas.setModel(modelo);
         } catch (Exception e) {
+            System.out.println("error en mostrarTodas");
         }
     }
+    
 
     public void mostrarPorHab(int id) {
         try {
@@ -83,6 +68,7 @@ public class BuscarReserva extends javax.swing.JInternalFrame {
 
             tablareservas.setModel(model);
         } catch (Exception e) {
+            System.out.println("error en mostrarPorHab");
         }
     }
 
@@ -92,10 +78,11 @@ public class BuscarReserva extends javax.swing.JInternalFrame {
             ReservaData porhues = new ReservaData(con);
 
             DefaultTableModel model;
-            model = porhues.buscarPorHuesped(id);
+            model = porhues.buscarPorHuespedAdmin(id);
 
             tablareservas.setModel(model);
         } catch (Exception e) {
+            System.out.println("error en mostrarPorHues");
         }
     }
 
@@ -108,6 +95,7 @@ public class BuscarReserva extends javax.swing.JInternalFrame {
 
             id_habi = re.getId_habitacion();
         } catch (Exception e) {
+            System.out.println("error en obtenerIdHab");
         }
     }
 
@@ -118,6 +106,7 @@ public class BuscarReserva extends javax.swing.JInternalFrame {
             habi.desocupar(id_habi);
 
         } catch (Exception e) {
+            System.out.println("error en habilitarHab");
         }
     }
 
@@ -129,6 +118,7 @@ public class BuscarReserva extends javax.swing.JInternalFrame {
             elim.eliminarReserva(id_res);
 
         } catch (Exception e) {
+            System.out.println("error en eliminarReserva");
         }
     }
 
@@ -150,9 +140,10 @@ public class BuscarReserva extends javax.swing.JInternalFrame {
         cboxfiltros = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 102));
+        jPanel1.setBackground(new java.awt.Color(153, 153, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Reservas"));
 
         tablareservas.setModel(new javax.swing.table.DefaultTableModel(

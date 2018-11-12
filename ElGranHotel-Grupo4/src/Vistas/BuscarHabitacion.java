@@ -51,6 +51,7 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
 
             tablahabitaciones.setModel(modelo);           
         } catch (Exception e) {
+            System.out.println("error en mostrarTodas");
         }
     }
     
@@ -67,6 +68,7 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
 
             tablahabitaciones.setModel(modelo);           
         } catch (Exception e) {
+            System.out.println("error en mostrarLibres");
         }
     }
     
@@ -83,6 +85,7 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
 
             tablahabitaciones.setModel(modelo);           
         } catch (Exception e) {
+            System.out.println("error en mostrarOcupadas");
         }
     }
     
@@ -96,6 +99,7 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
             
             tablahabitaciones.setModel(model);           
         } catch (Exception e) {
+            System.out.println("error en mostrarPorTipo");
         }
     }
     
@@ -110,6 +114,7 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
             
             tablahabitaciones.setModel(model);           
         } catch (Exception e) {
+            System.out.println("error en mostrarPorPiso");
         }
     }
     
@@ -122,6 +127,7 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
             elim.eliminar(id_hab);
 
         } catch (Exception e) {
+            System.out.println("error en eliminarHabitacion");
         }
     }
     
@@ -144,9 +150,10 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
         cboxfiltros = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 102));
+        jPanel1.setBackground(new java.awt.Color(153, 153, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Habitaciones"));
 
         tablahabitaciones.setModel(new javax.swing.table.DefaultTableModel(

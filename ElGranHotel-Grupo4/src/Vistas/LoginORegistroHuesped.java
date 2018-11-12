@@ -68,6 +68,7 @@ public class LoginORegistroHuesped extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
+            System.out.println("error en verificarHuesped");
         }
         return existe;
     }
@@ -88,6 +89,7 @@ public class LoginORegistroHuesped extends javax.swing.JFrame {
             id_huesped = hd.registrarHuesped(huesped); //Obtengo el ID del huesped
 
         } catch (Exception e) {
+            System.out.println("error en registrarHuesped");
         }
 
     }

@@ -5,6 +5,7 @@
  */
 package Vistas;
 
+import Logica.ImagenFondo;
 import java.awt.Dimension;
 import javax.swing.JInternalFrame;
 
@@ -19,7 +20,10 @@ public class Inicio extends javax.swing.JFrame {
     
     public Inicio() {
         initComponents();
+       
+        escritorio.setBorder(new ImagenFondo());
         this.setExtendedState(Inicio.MAXIMIZED_BOTH);
+
         menuhabitaciones.setEnabled(false);
         menutipos.setEnabled(false);
         menuhuespedes.setEnabled(false);
@@ -31,6 +35,7 @@ public class Inicio extends javax.swing.JFrame {
     
     public Inicio(int valor) {
         initComponents();
+        escritorio.setBorder(new ImagenFondo());
         this.setExtendedState(Inicio.MAXIMIZED_BOTH);
         menuhabitaciones.setEnabled(false);
         menutipos.setEnabled(false);
@@ -61,6 +66,7 @@ public class Inicio extends javax.swing.JFrame {
     public Inicio(String admin, int id_huesped) {
         initComponents();
         this.id_huesped = id_huesped;
+        escritorio.setBorder(new ImagenFondo());
         this.setExtendedState(Inicio.MAXIMIZED_BOTH);
         menuhabitaciones.setEnabled(true);
         menutipos.setEnabled(true);
@@ -72,6 +78,7 @@ public class Inicio extends javax.swing.JFrame {
     public Inicio(boolean admin, int id_huesped) {
         initComponents();
         this.id_huesped = id_huesped;
+        escritorio.setBorder(new ImagenFondo());
         this.setExtendedState(Inicio.MAXIMIZED_BOTH);
         menuhabitaciones.setEnabled(false);
         menutipos.setEnabled(false);
@@ -101,17 +108,25 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
         escritorio = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         openMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         ingresohuesped = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         huespedmisreservas = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         huespedmisdatos = new javax.swing.JMenuItem();
         menuhabitaciones = new javax.swing.JMenu();
         menubuscarhabitacion1 = new javax.swing.JMenuItem();
@@ -122,9 +137,21 @@ public class Inicio extends javax.swing.JFrame {
         menureservas = new javax.swing.JMenu();
         menubuscarreserva = new javax.swing.JMenuItem();
 
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenu1.setText("jMenu1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        escritorio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jLabel1.setText("jLabel1");
+
+        jLabel2.setText("jLabel2");
+
         menuBar.setForeground(new java.awt.Color(255, 0, 0));
+        menuBar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        menuBar.setPreferredSize(new java.awt.Dimension(1100, 38));
 
         fileMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/carpeta.png"))); // NOI18N
         fileMenu.setMnemonic('f');
@@ -138,6 +165,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         fileMenu.add(jMenuItem7);
+        fileMenu.add(jSeparator4);
 
         openMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/001-flecha-de-volver-a-cargar.png"))); // NOI18N
         openMenuItem.setMnemonic('o');
@@ -186,6 +214,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         editMenu.add(cutMenuItem);
+        editMenu.add(jSeparator1);
 
         ingresohuesped.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/002-pagina-de-inicio.png"))); // NOI18N
         ingresohuesped.setMnemonic('c');
@@ -196,6 +225,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         editMenu.add(ingresohuesped);
+        editMenu.add(jSeparator2);
 
         huespedmisreservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/002-pagina-de-documento-de-texto.png"))); // NOI18N
         huespedmisreservas.setText("Mis reservas");
@@ -205,6 +235,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         editMenu.add(huespedmisreservas);
+        editMenu.add(jSeparator3);
 
         huespedmisdatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/reanudar.png"))); // NOI18N
         huespedmisdatos.setText("Mis Datos");
@@ -288,7 +319,7 @@ public class Inicio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 839, Short.MAX_VALUE)
+            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 1001, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -466,9 +497,17 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem huespedmisdatos;
     private javax.swing.JMenuItem huespedmisreservas;
     private javax.swing.JMenuItem ingresohuesped;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menubuscarhabitacion1;
     private javax.swing.JMenuItem menubuscarreserva;

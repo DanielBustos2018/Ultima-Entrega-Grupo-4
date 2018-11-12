@@ -47,9 +47,26 @@ public class MisReservas extends javax.swing.JInternalFrame {
             DefaultTableModel modelo;
             modelo = todas.buscarPorHuesped(id_hues);
             
-            tablareservas.setModel(modelo);           
+            tablareservas.setModel(modelo);
+            ocultarColumnasRes();
         } catch (Exception e) {
+            System.out.println("error en mostrarMisReservas");
         }
+    }
+    
+    public void ocultarColumnasRes(){
+        //Columna ID
+        tablareservas.getColumnModel().getColumn(0).setMaxWidth(0);
+        tablareservas.getColumnModel().getColumn(0).setMinWidth(0);
+        tablareservas.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+        tablareservas.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
+        
+        //Columna ID_Huesped:
+        tablareservas.getColumnModel().getColumn(1).setMaxWidth(0);
+        tablareservas.getColumnModel().getColumn(1).setMinWidth(0);
+        tablareservas.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0);
+        tablareservas.getTableHeader().getColumnModel().getColumn(1).setMinWidth(0);
+        
     }
     
 
@@ -62,6 +79,7 @@ public class MisReservas extends javax.swing.JInternalFrame {
         tablareservas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 102));

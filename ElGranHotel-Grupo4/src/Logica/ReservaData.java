@@ -1,3 +1,13 @@
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//                         EL GRAN HOTEL - GRUPO 4                            //
+//                                                                            //
+//   YAMILE BUNINO - FLORENCIA BORDAGORRY - BUSTOS DANIEL - BERTERO RODOLFO   //
+//                                                                            //
+//                           CLASE RESERVA DATA                               //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
+
 package Logica;
 
 import Datos.Huesped;
@@ -13,21 +23,20 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ReservaData {
-
     String sql = "";
     private Connection con = null;
-    public Integer totalregistros;
     private int id_reserva = 0;
 
     public ReservaData(Conexion conexion) {
         try {
             con = conexion.conectar();
+            
         } catch (SQLException e) {
-
+            JOptionPane.showMessageDialog(null, "No se ha podido establecer la conexion con la base de datos (Reserva Data) error: " + e);
         }
     }
 
-    //El siguiente método me permite insertar una nueva reserva y retorna el ID asignado a la misma
+    //El siguiente método me permite insertar una nueva reserva y retorna el ID asignado a la misma:
     public int insertar(Reserva nr) {
         sql = "INSERT INTO reserva (id_huesped, id_habitacion, fecha_entrada, fecha_salida, cantidad_personas, importe, estado) VALUES ( ? , ? , ? , ? , ? , ? , ? )";
 
@@ -52,14 +61,14 @@ public class ReservaData {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-            return id_reserva;
         }
         return id_reserva;
     }
     
+    
+    //El siguiente método permite inservar el id de un huesped luego de que el mismo confirme la reserva:
     public void insertarIdHuesped(int id_r, int id_h) {
         sql = "UPDATE reserva SET id_huesped = ?, estado = ? WHERE id_reserva = ? ";
-
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id_h);
@@ -74,6 +83,21 @@ public class ReservaData {
     }
     
     
+    //Este metodo verifica si la fecha de salida es anterior a la actual, si es asi, entonces la reserva a caducado y se le debe
+    //cambiar e estado a 0(inactiva?
+    public void verificarFechaSalida(){
+        sql = "UPDATE reserva SET estado = 0 WHERE fecha_salida < NOW()";
+        try {
+            Statement ps = con.createStatement();
+            ps.executeQuery(sql);
+  
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    
+    //El siguiente método permite modificar los datos de una reserva:
     public void editarReserva(Reserva reserva) {
         sql = "UPDATE reserva SET id_huesped = ? , id_habitacion = ? , fecha_entrada = ? , fecha_salida = ? , cantidad_personas = ? , importe = ? , estado = ? WHERE id_reserva = ?";
         try {
@@ -87,10 +111,10 @@ public class ReservaData {
             ps.setInt(7, reserva.getEstado());
 
             ps.setInt(8, reserva.getId_reserva());
-
             ps.executeUpdate();
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
     
@@ -100,17 +124,12 @@ public class ReservaData {
         DefaultTableModel modelo;
 
         String[] titulos = {"ID", "Id_Huesped", "Id_Habitacion" , "Fecha Entrada", "Fecha Salida", "Cantidad de Personas", "Importe", "Estado"};
-
         String[] registro = new String[8];
-
-        totalregistros = 0;
         modelo = new DefaultTableModel(null, titulos);
-        
         sql = "SELECT * FROM reserva";
         
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            
+            PreparedStatement ps = con.prepareStatement(sql);            
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -127,8 +146,7 @@ public class ReservaData {
                 registro[5] = rs.getString("cantidad_personas");
                 registro[6] = rs.getString("importe");
                 registro[7] = rs.getString("estado");
-
-                totalregistros = totalregistros + 1;
+          
                 modelo.addRow(registro);
             }
             return modelo;
@@ -139,16 +157,13 @@ public class ReservaData {
         } 
     }
     
-    
-    //El siguiente metodo me permite buscarPorHuesped todas las reservas que ha hecho un huesped:
-    public DefaultTableModel buscarPorHuesped(int id_hpd) {
+    //El siguiente metodo me permite buscar Por Huesped todas las reservas que ha hecho un huesped:
+    public DefaultTableModel buscarPorHuespedAdmin(int id_hpd) {
         DefaultTableModel modelo;
 
         String[] titulos = {"ID", "Id_Huesped", "Id_Habitacion" , "Fecha Entrada", "Fecha Salida", "Cantidad de Personas", "Importe", "Estado"};
-
         String[] registro = new String[8];
 
-        totalregistros = 0;
         modelo = new DefaultTableModel(null, titulos);
         
         sql = "SELECT * FROM reserva WHERE id_huesped = ?";
@@ -160,16 +175,69 @@ public class ReservaData {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                //debo invertir la fecha para que en vez de mostrarse de la forma yyyy-mm-dd se muestre dd-mm-yyyy:
+                String fechaen = new SimpleDateFormat("dd-MM-yyyy").format(rs.getDate("fecha_entrada"));
+                String fechasa = new SimpleDateFormat("dd-MM-yyyy").format(rs.getDate("fecha_salida"));
+                       
                 registro[0] = rs.getString("id_reserva");
                 registro[1] = rs.getString("id_huesped");
                 registro[2] = rs.getString("id_habitacion");
-                registro[3] = rs.getString("fecha_entrada");
-                registro[4] = rs.getString("fecha_salida");
+                registro[3] = fechaen;
+                registro[4] = fechasa;
                 registro[5] = rs.getString("cantidad_personas");
                 registro[6] = rs.getString("importe");
                 registro[7] = rs.getString("estado");
 
-                totalregistros = totalregistros + 1;
+                modelo.addRow(registro);
+            }
+            return modelo;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        } 
+    }
+    
+        //El siguiente metodo me permite buscar Por Huesped todas las reservas que ha hecho un huesped:
+    public DefaultTableModel buscarPorHuesped(int id_hpd) {
+        DefaultTableModel modelo;
+
+        String[] titulos = {"ID", "Id_Huesped", "Num Habitación" , "Fecha Entrada", "Fecha Salida", "Cantidad de Personas", "Importe", "Estado"};
+        String[] registro = new String[8];
+
+        modelo = new DefaultTableModel(null, titulos);
+        
+        sql = "SELECT * FROM reserva WHERE id_huesped = ?";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id_hpd);
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                //debo invertir la fecha para que en vez de mostrarse de la forma yyyy-mm-dd se muestre dd-mm-yyyy:
+                String fechaen = new SimpleDateFormat("dd-MM-yyyy").format(rs.getDate("fecha_entrada"));
+                String fechasa = new SimpleDateFormat("dd-MM-yyyy").format(rs.getDate("fecha_salida"));
+                       
+                registro[0] = rs.getString("id_reserva");
+                registro[1] = rs.getString("id_huesped");
+                registro[2] = rs.getString("id_habitacion");
+                registro[3] = fechaen;
+                registro[4] = fechasa;
+                registro[5] = rs.getString("cantidad_personas");
+                registro[6] = rs.getString("importe");
+                
+                //A continuación si el estado es 0, entonces coloco la palabra Finalizada, si es 1 (reserva activa) entonces
+                //coloco la palabra Activa:
+                System.out.println(rs.getString("estado"));
+                if(Integer.parseInt(rs.getString("estado")) == 0){
+                    registro[7] = "Finalizada";
+                } else {
+                    registro[7] = "Activa";
+                }
+                
+
                 modelo.addRow(registro);
             }
             return modelo;
@@ -182,19 +250,15 @@ public class ReservaData {
     
     
     
-    //El siguiente metodo me permite buscarPorHuesped todas las reservas asociadas a una cierta habitacion:
+    //El siguiente metodo me permite buscar Por habitación todas las reservas asociadas a una cierta habitacion:
     public DefaultTableModel buscarPorHabitacion(int id_habi) {
         DefaultTableModel modelo;
 
         String[] titulos = {"ID", "Id_Huesped", "Id_Habitacion" , "Fecha Entrada", "Fecha Salida", "Cantidad de Personas", "Importe", "Estado"};
-
         String[] registro = new String[8];
-
-        totalregistros = 0;
         modelo = new DefaultTableModel(null, titulos);
         
-        sql = "SELECT * FROM reserva WHERE id_habitacion = ?";
-        
+        sql = "SELECT * FROM reserva WHERE id_habitacion = ?";    
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id_habi);
@@ -202,29 +266,30 @@ public class ReservaData {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                //debo invertir la fecha para que en vez de mostrarse de la forma yyyy-mm-dd se muestre dd-mm-yyyy:
+                String fechaen = new SimpleDateFormat("dd-MM-yyyy").format(rs.getDate("fecha_entrada"));
+                String fechasa = new SimpleDateFormat("dd-MM-yyyy").format(rs.getDate("fecha_salida"));
+                       
                 registro[0] = rs.getString("id_reserva");
                 registro[1] = rs.getString("id_huesped");
                 registro[2] = rs.getString("id_habitacion");
-                registro[3] = rs.getString("fecha_entrada");
-                registro[4] = rs.getString("fecha_salida");
+                registro[3] = fechaen;
+                registro[4] = fechasa;
                 registro[5] = rs.getString("cantidad_personas");
                 registro[6] = rs.getString("importe");
                 registro[7] = rs.getString("estado");
 
-                totalregistros = totalregistros + 1;
                 modelo.addRow(registro);
             }
-            return modelo;
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-            return null;
-        } 
+        }
+        return modelo;
     }
     
     
     
-    //El siguiente método permite buscarPorHuesped una reserva a partir del id de un huesped:
+    //El siguiente método permite buscar una reserva a partir de si ID:
     public Reserva buscarReserva(int id_res) {
         Reserva res = new Reserva(); //Instancio un objeto tipo Huesped para almacenar los datos leidos
         sql = "SELECT * FROM reserva WHERE id_reserva =" + id_res ;
@@ -247,11 +312,12 @@ public class ReservaData {
 
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
         return res;
     }
     
-    
+    //El siguiente método permite eliminar una reserva:
     public void eliminarReserva(int id_res) {
         sql = "DELETE FROM reserva WHERE id_reserva = " + id_res;
         try {
@@ -261,26 +327,21 @@ public class ReservaData {
             JOptionPane.showMessageDialog(null, "Reserva Eliminada");
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 
-    public boolean finreserva(int id_rs) {
+    //El siguiente método permite modificar el estado de una reserva y ponerle fin:
+    public void finreserva(int id_rs) {
         sql = "UPDATE reserva SET estado = 0 WHERE id_reserva = ? ";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id_rs);
-            int n = ps.executeUpdate();
-
-            if (n != 0) {
-                return true;
-            } else {
-                return false;
-            }
+            ps.executeUpdate();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-            return false;
         }
     }
 

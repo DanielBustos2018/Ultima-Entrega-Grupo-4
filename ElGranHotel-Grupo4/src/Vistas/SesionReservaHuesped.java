@@ -64,6 +64,7 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
 
             //System.out.println("El nombre del guacho es:" + hues.getNombre());
         } catch (Exception e) {
+            System.out.println("error obtenerHuesped");
         }
     }
 
@@ -75,6 +76,7 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
             res = rd.buscarReserva(id_reserva);
 
         } catch (Exception e) {
+            System.out.println("error obtenerReserva");
         }
     }
 
@@ -320,18 +322,14 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
 
     private void btnconfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnconfirmarActionPerformed
         //Si el huesped confirma la reserva, procedo a registrar en la misma, el ID del huesped y cambio el estado a 1
-
         try {
             Reserva ress = new Reserva();
             con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
             ReservaData rds = new ReservaData(con);
             rds.insertarIdHuesped(this.id_reserva, this.id_huesped);
             
-            //Luego de insertado el huesped, vuelvo al inicio:
-            
-            
-            
         } catch (Exception e) {
+            System.out.println("error en boton confirmarAction");
         }
         
         //Ademas, debo cambiar el estado de la habitacion a ocupada (1):
@@ -341,6 +339,7 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
             rds.ocupar(res.getId_habitacion());
 
         } catch (Exception e) {
+            System.out.println("error en boton confirmarAction");
         }
         
         JOptionPane.showMessageDialog(null, "Reserva Resgitrada Exitosamente - ID = " + id_reserva);
@@ -350,8 +349,7 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
         ini.setVisible(true);*/
         escritorio.removeAll();
         escritorio.repaint();
-        
-        
+
     }//GEN-LAST:event_btnconfirmarActionPerformed
 
     private void btndescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndescartarActionPerformed
@@ -362,6 +360,7 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
             ReservaData rdse = new ReservaData(con);
             rdse.eliminarReserva(id_reserva);
         } catch (Exception e) {
+            System.out.println("error en boton descartar");
         }
 
         escritorio.removeAll();
@@ -373,12 +372,6 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
         escritorio.add(log);
         log.toFront();
         log.setVisible(true);
-        
-        
-        
-        
-        
-        
         
     }//GEN-LAST:event_btndescartarActionPerformed
 

@@ -49,14 +49,40 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
     DefaultTableModel modelohabs;
 
     public ReservaCliente() {
-        initComponents();
+       initComponents();
         btnsiguientehab.setEnabled(false); //Deshabilito el botón siguiente para elegir un tipo deseado
+        
+        //A continuación seteo los nombres de las columnas de ámbas tablas, pero en este caso, para el huesped, solo muestro
+        //parametros importantes y quito ID, Estado, etc.:
         String[] titulos = {"ID", "Tipo", "Capacidad" , "Cantidad de camas", "Tipo de cama", "Precio por noche"};
         modelotipos = new DefaultTableModel(null, titulos);
         tablatiposhab.setModel(modelotipos);
-        String[] tituloshab = {"ID", "Id_tipoHabitacion", "Numero" , "Piso", "Estado"};
+        String[] tituloshab = {"ID", "Numero", "Piso", "Noches", "Costo toal"};
         modelohabs = new DefaultTableModel(null, tituloshab);
         tablahabs.setModel(modelohabs);
+        
+        //A continuacion deshabilito las columnas de la tabla habitaciones que no necesita ver el huesped:
+        ocultarColumnasHab();
+        
+        //A continuacion deshabilito las columnas de la tabla tipos de habitacion que no necesita ver el huesped:
+        ocultarColumnasTipos();
+        
+    }
+    
+    public void ocultarColumnasHab(){
+        //Columna ID
+        tablahabs.getColumnModel().getColumn(0).setMaxWidth(0);
+        tablahabs.getColumnModel().getColumn(0).setMinWidth(0);
+        tablahabs.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+        tablahabs.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
+    }
+    
+    public void ocultarColumnasTipos(){
+        //Columna ID
+        tablatiposhab.getColumnModel().getColumn(0).setMaxWidth(0);
+        tablatiposhab.getColumnModel().getColumn(0).setMinWidth(0);
+        tablatiposhab.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+        tablatiposhab.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
     }
     
     
@@ -84,6 +110,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
             id_reserva = rd.insertar(r);
             
         } catch (Exception e) {
+            System.out.println("error en registrarReserva");
         }
     }
     
@@ -100,22 +127,25 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
             //El siguiente if comprueba que la tabla modelo no este vacia. Ésta estará vacia si la cantidad
             //de personas ingresadas supera la capacidad de cualquier tipo de habitación.
             if (modelo.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(null, "La cantidad de personas supera la capacidad de cualquier habitacion. Por favor haga mas de una reserva");
                 tablatiposhab.setModel(modelotipos);
                 tablahabs.setModel(modelohabs);
+                JOptionPane.showMessageDialog(null, "La cantidad de personas supera la capacidad de cualquier habitacion. Por favor haga mas de una reserva");
             } else {
                 tablatiposhab.setModel(modelo);
             }
+            
+            //A continuacion deshabilito las columnas de la tabla habitaciones que no necesita ver el huesped:
+            ocultarColumnasHab();
+        
+            //A continuacion deshabilito las columnas de la tabla tipos de habitacion que no necesita ver el huesped:
+            ocultarColumnasTipos();
 
         } catch (Exception e) {
             System.out.println("error mostrartipos.java");
         }
     }
     
-    
-    
-    
-    
+   
     public void mostrarHabitaciones() {
         try {
             costototal = precio_noche * diassalida;
@@ -138,6 +168,14 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
         fechasalida.setCalendar(null);
         cboxadultos.setSelectedIndex(0);
         cboxniños.setSelectedIndex(0);
+        
+        tablatiposhab.setModel(modelotipos);
+        tablahabs.setModel(modelohabs);
+        
+        //A continuacion deshabilito las columnas de la tabla habitaciones que no necesita ver el huesped:
+        ocultarColumnasHab();  
+        //A continuacion deshabilito las columnas de la tabla tipos de habitacion que no necesita ver el huesped:
+        ocultarColumnasTipos();
     }
 
     public void comprobarFechaSalida(int año, int mes, int dia) {
@@ -169,7 +207,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
             Date fechaProxima = new Date(fsalida[2], fsalida[1], fsalida[0]);
 
             diassalida = (int) ((fechaProxima.getTime() - f_salida.getTime()) / 86400000);
-            System.out.println("Hay " + diassalida + " dias de diferencia");
+            //System.out.println("Hay " + diassalida + " dias de diferencia");
 
             if (diassalida > 0) { //Si a fecha de salida es mayor que a de llegada, entonces el dato esta bien y paso a comprobar la fecha de salida
                 comprobarCampos();
@@ -210,10 +248,9 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
             Date fechaProxima = new Date(fllegada[2], fllegada[1], fllegada[0]);
 
             int dias = (int) ((fechaProxima.getTime() - f_llegada.getTime()) / 86400000);
-            System.out.println("Hay " + dias + " dias de diferencia");
+            //System.out.println("Hay " + dias + " dias de diferencia");
 
             if (dias >= 0) { //Si a fecha de llegada coincide con la actual o es mayor, entonces el dato esta bien y paso a comprobar la fecha de salida
-                System.out.println("llego hasta aca");
                 comprobarFechaSalida(fllegada[2], fllegada[1], fllegada[0]);
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese una fecha de llegada correcta");
@@ -265,6 +302,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
         tablahabs = new javax.swing.JTable();
         btnsiguientehab = new javax.swing.JButton();
         labeltipos1 = new javax.swing.JLabel();
+        labeltipos2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 255, 204));
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -342,9 +380,9 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(fechallegada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(fechasalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(fechasalida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -387,7 +425,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -467,6 +505,10 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
         labeltipos1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labeltipos1.setText("TIPOS DE HABITACIONES");
 
+        labeltipos2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        labeltipos2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labeltipos2.setText("DATOS NECESARIOS");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -477,18 +519,22 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
                     .addComponent(labeltipos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labeltipos2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(labeltipos1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE))))
+                            .addComponent(labeltipos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labeltipos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labeltipos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labeltipos2, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -504,6 +550,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnsiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsiguienteActionPerformed
+        tablahabs.setModel(modelohabs);
         comprobarFechaLlegada();
     }//GEN-LAST:event_btnsiguienteActionPerformed
 
@@ -613,6 +660,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labeltipos;
     private javax.swing.JLabel labeltipos1;
+    private javax.swing.JLabel labeltipos2;
     private javax.swing.JTable tablahabs;
     private javax.swing.JTable tablatiposhab;
     // End of variables declaration//GEN-END:variables

@@ -58,6 +58,7 @@ public class ModificarHuesped extends javax.swing.JInternalFrame {
 
             
         } catch (Exception e) {
+            System.out.println("error en mostrarDatosHuesped");
         }
     }
 
@@ -77,6 +78,7 @@ public class ModificarHuesped extends javax.swing.JInternalFrame {
             nuevo.editarHuesped(nombre, apellido, dni, domicilio, correo, telefono, id_huesp);
             
         } catch (Exception e) {
+            System.out.println("error en guardarDatos");
         }
         
     }

@@ -44,6 +44,7 @@ public class NuevaHabitacion extends javax.swing.JInternalFrame {
             }
 
         } catch (Exception e) {
+            System.out.println("error en mostrarTipos");
         }
     }
     
@@ -95,6 +96,7 @@ public class NuevaHabitacion extends javax.swing.JInternalFrame {
             nueva.insertar(id_tipohab, numero, piso, estado);
             
         } catch (Exception e) {
+            System.out.println("error en insertarNuevaHabitacion");
         }
         
     }
@@ -294,7 +296,7 @@ public class NuevaHabitacion extends javax.swing.JInternalFrame {
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
         //Aqui controlare que se ingresen todos los datos requeridos:
-        if(cboxtipos.getSelectedItem().toString().equals("Seleccione")){
+        if(cboxtipos.getSelectedItem().toString().equals("Seleccione el ID")){
             JOptionPane.showMessageDialog(null, "Por favor seleccione el tipo de habitación");
         }
         else if (cboxnumero.getSelectedItem().toString().equals("Seleccione")){

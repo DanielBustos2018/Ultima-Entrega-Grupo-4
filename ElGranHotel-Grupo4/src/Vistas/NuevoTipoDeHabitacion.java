@@ -77,6 +77,7 @@ public class NuevoTipoDeHabitacion extends javax.swing.JInternalFrame {
             nuevo.insertar(tipohab, capacidad, cant_cam, tipocama, precionoche);
             
         } catch (Exception e) {
+            System.out.println("error en insertarNuevoTipoDeHabitacion");
         }
         
     }

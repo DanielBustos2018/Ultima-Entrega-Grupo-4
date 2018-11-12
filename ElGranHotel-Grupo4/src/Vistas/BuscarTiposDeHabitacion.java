@@ -49,6 +49,7 @@ public class BuscarTiposDeHabitacion extends javax.swing.JInternalFrame {
 
             tablatiposhabitacion.setModel(modelo);           
         } catch (Exception e) {
+            System.out.println("error en mostrarTodos");
         }
     }
     
@@ -64,6 +65,7 @@ public class BuscarTiposDeHabitacion extends javax.swing.JInternalFrame {
 
             tablatiposhabitacion.setModel(modelo);           
         } catch (Exception e) {
+            System.out.println("error en precioMenorMayor");
         }
     }
     
@@ -79,6 +81,7 @@ public class BuscarTiposDeHabitacion extends javax.swing.JInternalFrame {
 
             tablatiposhabitacion.setModel(modelo);           
         } catch (Exception e) {
+            System.out.println("error en precioMayorMenor");
         }
     }
     
@@ -94,6 +97,7 @@ public class BuscarTiposDeHabitacion extends javax.swing.JInternalFrame {
 
             tablatiposhabitacion.setModel(modelo);           
         } catch (Exception e) {
+            System.out.println("error en mostrarCapacidadMenorMayor");
         }
     }
     
@@ -109,6 +113,7 @@ public class BuscarTiposDeHabitacion extends javax.swing.JInternalFrame {
 
             tablatiposhabitacion.setModel(modelo);           
         } catch (Exception e) {
+            System.out.println("error en mostrarCapacidadMayorMenor");
         }
     }
     
@@ -123,6 +128,7 @@ public class BuscarTiposDeHabitacion extends javax.swing.JInternalFrame {
             
             tablatiposhabitacion.setModel(model);           
         } catch (Exception e) {
+            System.out.println("error en mostrarPorTipo");
         }
     }
     
@@ -135,6 +141,7 @@ public class BuscarTiposDeHabitacion extends javax.swing.JInternalFrame {
             elim.eliminar(id_tipohab);
 
         } catch (Exception e) {
+            System.out.println("error en eliminarTipoDeHabitacion");
         }
     }
     
@@ -155,9 +162,10 @@ public class BuscarTiposDeHabitacion extends javax.swing.JInternalFrame {
         cboxfiltros = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 102));
+        jPanel1.setBackground(new java.awt.Color(153, 153, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Tipos de Habitacion"));
 
         tablatiposhabitacion.setModel(new javax.swing.table.DefaultTableModel(

@@ -58,6 +58,7 @@ public class MisDatos extends javax.swing.JInternalFrame {
 
             
         } catch (Exception e) {
+            System.out.println("error en mostrarDatosHuesped");
         }
     }
 
@@ -77,6 +78,7 @@ public class MisDatos extends javax.swing.JInternalFrame {
             nuevo.editarHuesped(nombre, apellido, dni, domicilio, correo, telefono, id_huesp);
             
         } catch (Exception e) {
+            System.out.println("error en guardarDatos");
         }
         
     }
@@ -101,6 +103,7 @@ public class MisDatos extends javax.swing.JInternalFrame {
         txtapellido = new javax.swing.JTextField();
         txtnombre = new javax.swing.JTextField();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N

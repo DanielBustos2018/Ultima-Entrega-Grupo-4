@@ -5,20 +5,81 @@
  */
 package Vistas;
 
+import Logica.Conexion;
+import Logica.HabitacionData;
+import Logica.ReservaData;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Dani
  */
 public class PrimerVista extends javax.swing.JFrame {
+    private Conexion con;
 
-    /**
-     * Creates new form PrimerVista
-     */
     public PrimerVista() {
         initComponents();
         this.setLocationRelativeTo(null);
+        verificarFechasReservas();
+        mostrarTodas();
     }
 
+    
+    //El siguiente metodo invoca al metodo verificarFechaSalida de la clase ReservaData en el cual se verifica
+    //que si la fecha de salida es menor a la actual, entonces la reserva pasa de estado 1 a 0, es decir de activa a inactiva.
+    public void verificarFechasReservas(){
+        try {
+            con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
+            ReservaData thd = new ReservaData(con);
+            thd.verificarFechaSalida();
+
+        } catch (Exception e) {
+            System.out.println("error reservacliente.java");
+        }
+    }
+
+    public void mostrarTodas() {
+        try {
+            con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
+            ReservaData todas = new ReservaData(con);
+
+            DefaultTableModel modelo;
+            modelo = todas.mostrartodas();
+            
+            String idhab;
+            String estado;
+            int id_habit;
+ 
+            //Aqui habilitare las habitaciones de las reservas que ya han caducado.
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                idhab = (String) modelo.getValueAt(i, 2);   //Obtengo el id de la habitacion
+                estado = (String) modelo.getValueAt(i, 7);  //Obtengo el estado de la reserva
+                //System.out.println(idhab);
+                //Aqui verifico lo siguiente: si el estado de la reserva es 0, entonces obtengo el ID de la habitacion,
+                //la busco y le cambio el estado de ocupada a libre (e caso de que este ocupada):
+                if (estado.equals("0")){
+                    id_habit = Integer.parseInt(idhab);                    
+                    desocuparHabitacion(id_habit);
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("error en mostrarTodas");
+        }
+    }
+
+    public void desocuparHabitacion(int id){
+        try {
+            con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
+            HabitacionData porhab = new HabitacionData(con);
+
+            porhab.desocupar(id);
+        } catch (Exception e) {
+            System.out.println("error desocuparHabitacion");
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

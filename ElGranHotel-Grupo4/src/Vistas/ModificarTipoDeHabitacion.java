@@ -112,6 +112,7 @@ public class ModificarTipoDeHabitacion extends javax.swing.JInternalFrame {
 
             //System.out.println("el id de la habitacion es: " + id_tipohab);
         } catch (Exception e) {
+            System.out.println("error en mostrarDatosHabitacion");
         }
     }
 
@@ -158,6 +159,7 @@ public class ModificarTipoDeHabitacion extends javax.swing.JInternalFrame {
             nuevo.editar(tipohab, capacidad, cant_cam, tipocama, precionoche, id_tipohab);
             
         } catch (Exception e) {
+            System.out.println("error en guardarDatos");
         }
         
     }

@@ -51,6 +51,7 @@ public class LoginAdministrador extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
+            System.out.println("error en verificarAdmin");
         }
         return existe;
     }

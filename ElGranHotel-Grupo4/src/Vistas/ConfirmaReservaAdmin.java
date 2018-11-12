@@ -41,7 +41,7 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
         this.numhab = numhab;
         this.precio_noche = precio_noche;
 
-        System.out.println(this.id_reserva + " - " + this.id_huesped);
+        //System.out.println(this.id_reserva + " - " + this.id_huesped);
 
         //Como tengo los datos de la reserva y el huesped, procedo a mostrar esta informacion mediante las siguientes funciones:
         obtenerHuesped();
@@ -64,6 +64,7 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
 
             //System.out.println("El nombre del guacho es:" + hues.getNombre());
         } catch (Exception e) {
+            System.out.println("error en obtenerHuesped");
         }
     }
 
@@ -75,6 +76,7 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
             res = rd.buscarReserva(id_reserva);
 
         } catch (Exception e) {
+            System.out.println("error en obtenerReservas");
         }
     }
 
@@ -117,13 +119,13 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
         lblprecionoche = new javax.swing.JLabel();
         lblpreciototal = new javax.swing.JLabel();
         lblhabitacion = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        descartar = new javax.swing.JButton();
         btnconfirmar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(51, 204, 0));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -192,10 +194,10 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
         lblhabitacion.setForeground(new java.awt.Color(0, 102, 51));
         lblhabitacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
-        jButton1.setText("DESCARTAR RESERVA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        descartar.setText("DESCARTAR RESERVA");
+        descartar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                descartarActionPerformed(evt);
             }
         });
 
@@ -214,7 +216,7 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(descartar)
                         .addGap(62, 266, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -284,9 +286,9 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
                     .addComponent(lblhabitacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(49, 49, 49)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(btnconfirmar))
-                .addGap(28, 28, 28))
+                    .addComponent(descartar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnconfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17))
         );
 
         jLabel11.setBackground(new java.awt.Color(204, 255, 204));
@@ -308,11 +310,11 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -327,6 +329,7 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
             rds.insertarIdHuesped(this.id_reserva, this.id_huesped);
 
         } catch (Exception e) {
+            System.out.println("error en botonconfirmar");
         }
         
         //Ademas, debo cambiar el estado de la habitacion a ocupada (1):
@@ -336,6 +339,7 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
             rds.ocupar(res.getId_habitacion());
 
         } catch (Exception e) {
+            System.out.println("error en botonconfirmar");
         }
 
         JOptionPane.showMessageDialog(null, "Reserva Resgitrada Exitosamente - ID = " + id_reserva);
@@ -354,7 +358,7 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnconfirmarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void descartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descartarActionPerformed
         //Aqui debo eliminar la reserva guardada temporalmente y luego volver a buscarPorHuesped reservas
         
         try {
@@ -362,6 +366,7 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
             ReservaData rdse = new ReservaData(con);
             rdse.eliminarReserva(id_reserva);
         } catch (Exception e) {
+            System.out.println("error en insertarNuevoTipoDeHabitacion");
         }
 
         escritorio.removeAll();
@@ -373,7 +378,7 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
         escritorio.add(br);
         br.toFront();
         br.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_descartarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -415,7 +420,7 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnconfirmar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton descartar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;

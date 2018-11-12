@@ -1,8 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//                         EL GRAN HOTEL - GRUPO 4                            //
+//                                                                            //
+//   YAMILE BUNINO - FLORENCIA BORDAGORRY - BUSTOS DANIEL - BERTERO RODOLFO   //
+//                                                                            //
+//                           CLASE HUESPED DATA                               //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
+
+
 package Logica;
 
 import Datos.Huesped;
@@ -20,32 +26,25 @@ public class HuespedData {
 
     String sql = "";
     private Connection con = null;
-    public Integer totalregistros;
 
     public HuespedData(Conexion conexion) {
         try {
             con = conexion.conectar();
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "No se ha podido establecer la conexion con la base de datos (Huesped Data) error: " + e);
         }
     }
-    
     
     //El siguiente método permite mostrar todos los huespedes:
     public DefaultTableModel mostrartodos() {
         DefaultTableModel modelo;
-
         String[] titulos = {"ID", "Nombre", "Apellido" , "Dni", "Domicilio", "Correo", "Teléfono"};
-
         String[] registro = new String[7];
-
-        totalregistros = 0;
         modelo = new DefaultTableModel(null, titulos);
         
         sql = "SELECT * FROM huesped";
-        
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -56,20 +55,17 @@ public class HuespedData {
                 registro[4] = rs.getString("domicilio");
                 registro[5] = rs.getString("correo");
                 registro[6] = rs.getString("telefono");
-
-                totalregistros = totalregistros + 1;
                 modelo.addRow(registro);
             }
             return modelo;
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
             return null;
         } 
     }
 
-    public int registrarHuesped(Huesped huesped) {
-        
+    //El siguiente método permite registar un huesped:
+    public int registrarHuesped(Huesped huesped) {    
         sql = "INSERT INTO huesped (nombre, apellido, dni, domicilio, correo, telefono) VALUES ( ? , ? , ? , ? , ? , ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -81,6 +77,7 @@ public class HuespedData {
             ps.setString(6, huesped.getTelefono());
 
             ps.executeUpdate();
+            
             //A continuacion obtengo el ID asignado al huesped:
             ResultSet rs = ps.getGeneratedKeys();
             
@@ -96,7 +93,8 @@ public class HuespedData {
         }
         return id_huesped;
     }
-
+    
+    //El siguiente método permite editar los datos de un huesped:
     public void editarHuesped(String nombre, String apellido, String dni, String domicilio, String correo, String telefono, int id_huesp) {
         sql = "UPDATE huesped SET nombre = ? , apellido = ? , dni = ? , domicilio = ? , correo = ? , telefono = ? WHERE id_huesped = ?";
         try {
@@ -107,33 +105,33 @@ public class HuespedData {
             ps.setString(4, domicilio);
             ps.setString(5, correo);
             ps.setString(6, telefono);
-
             ps.setInt(7, id_huesp);
-
             ps.executeUpdate();
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 
+    //El siguiente método permite eliminar un huesped:
     public void eliminarHuesped(int id_h) {
         sql = "DELETE FROM huesped WHERE id_huesped = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id_h);
-
             ps.executeUpdate();
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 
+    //El siguiente método permite buscar un huesped por apellido y dni:
     public Huesped buscarHuesped(String loginapellido, String logindni) {
         Huesped hues = new Huesped(); //Instancio un objeto tipo Huesped para almacenar los datos leidos
         sql = "SELECT * FROM huesped WHERE apellido = '" + loginapellido + "' AND dni = '" + logindni + "' ";
 
         try {
-
             Statement ps = con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
             
@@ -146,10 +144,9 @@ public class HuespedData {
                 hues.setDomicilio(rs.getString("domicilio"));
                 hues.setCorreo(rs.getString("correo"));
                 hues.setTelefono(rs.getString("telefono"));
-
-                //System.out.println(hues.getId_huesped() + hues.getApellido() + hues.getNombre() + hues.getDni());
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
         return hues;
     }
@@ -160,7 +157,6 @@ public class HuespedData {
         sql = "SELECT * FROM huesped WHERE  id_huesped = '" + loginid + "'  AND apellido = '" + loginapellido + "' AND dni = '" + logindni + "'";
 
         try {
-
             Statement ps = con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
             
@@ -173,21 +169,19 @@ public class HuespedData {
                 hues.setDomicilio(rs.getString("domicilio"));
                 hues.setCorreo(rs.getString("correo"));
                 hues.setTelefono(rs.getString("telefono"));
-
-                //System.out.println(hues.getId_huesped() + hues.getApellido() + hues.getNombre() + hues.getDni());
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
         return hues;
     }
     
-    
+    //El siguiente método sobrecargado permite buscar un huesped por ID:
     public Huesped buscarHuesped(int id_huesped) {
         Huesped hues = new Huesped(); //Instancio un objeto tipo Huesped para almacenar los datos leidos
         sql = "SELECT * FROM huesped WHERE id_huesped =" + id_huesped;
 
         try {
-
             Statement ps = con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
             
@@ -200,13 +194,14 @@ public class HuespedData {
                 hues.setDomicilio(rs.getString("domicilio"));
                 hues.setCorreo(rs.getString("correo"));
                 hues.setTelefono(rs.getString("telefono"));
-
-                //System.out.println(hues.getId_huesped() + hues.getApellido() + hues.getNombre() + hues.getDni());
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
         return hues;
     }
+    
+   
     public Huesped buscarHuesped(String dni_huesped) {
         Huesped hues = new Huesped(); //Instancio un objeto tipo Huesped para almacenar los datos leidos
         sql = "SELECT * FROM huesped WHERE dni = ? ";
@@ -227,8 +222,6 @@ public class HuespedData {
                 hues.setDomicilio(rs.getString("domicilio"));
                 hues.setCorreo(rs.getString("correo"));
                 hues.setTelefono(rs.getString("telefono"));
-
-                //System.out.println(hues.getId_huesped() + hues.getApellido() + hues.getNombre() + hues.getDni());
             }
         } catch (Exception e) {
         }
