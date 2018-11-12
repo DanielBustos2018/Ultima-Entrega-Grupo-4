@@ -159,6 +159,7 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/eliminar.png"))); // NOI18N
         jMenuItem7.setText("Cerrar Sesion");
+        jMenuItem7.setPreferredSize(new java.awt.Dimension(140, 30));
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem7ActionPerformed(evt);
@@ -170,6 +171,7 @@ public class Inicio extends javax.swing.JFrame {
         openMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/001-flecha-de-volver-a-cargar.png"))); // NOI18N
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Salir");
+        openMenuItem.setPreferredSize(new java.awt.Dimension(140, 30));
         openMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openMenuItemActionPerformed(evt);
@@ -186,6 +188,7 @@ public class Inicio extends javax.swing.JFrame {
         aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/002-pagina-de-inicio.png"))); // NOI18N
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("Ingreso");
+        aboutMenuItem.setPreferredSize(new java.awt.Dimension(120, 30));
         aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aboutMenuItemActionPerformed(evt);
@@ -208,6 +211,7 @@ public class Inicio extends javax.swing.JFrame {
         cutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/001-anadir-nuevo-documento.png"))); // NOI18N
         cutMenuItem.setMnemonic('t');
         cutMenuItem.setText("Nueva reserva");
+        cutMenuItem.setPreferredSize(new java.awt.Dimension(140, 30));
         cutMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cutMenuItemActionPerformed(evt);
@@ -219,6 +223,7 @@ public class Inicio extends javax.swing.JFrame {
         ingresohuesped.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/002-pagina-de-inicio.png"))); // NOI18N
         ingresohuesped.setMnemonic('c');
         ingresohuesped.setText("Ingreso/Registro");
+        ingresohuesped.setPreferredSize(new java.awt.Dimension(140, 30));
         ingresohuesped.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ingresohuespedActionPerformed(evt);
@@ -229,6 +234,7 @@ public class Inicio extends javax.swing.JFrame {
 
         huespedmisreservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/002-pagina-de-documento-de-texto.png"))); // NOI18N
         huespedmisreservas.setText("Mis reservas");
+        huespedmisreservas.setPreferredSize(new java.awt.Dimension(140, 30));
         huespedmisreservas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 huespedmisreservasActionPerformed(evt);
@@ -239,6 +245,7 @@ public class Inicio extends javax.swing.JFrame {
 
         huespedmisdatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/reanudar.png"))); // NOI18N
         huespedmisdatos.setText("Mis Datos");
+        huespedmisdatos.setPreferredSize(new java.awt.Dimension(140, 30));
         huespedmisdatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 huespedmisdatosActionPerformed(evt);
@@ -254,6 +261,7 @@ public class Inicio extends javax.swing.JFrame {
 
         menubuscarhabitacion1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/003-lupa-de-busqueda.png"))); // NOI18N
         menubuscarhabitacion1.setText("Buscar Habitacion");
+        menubuscarhabitacion1.setPreferredSize(new java.awt.Dimension(140, 30));
         menubuscarhabitacion1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menubuscarhabitacion1ActionPerformed(evt);
@@ -269,6 +277,7 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/003-lupa-de-busqueda.png"))); // NOI18N
         jMenuItem2.setText("Buscar Tipo");
+        jMenuItem2.setPreferredSize(new java.awt.Dimension(140, 30));
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -281,11 +290,12 @@ public class Inicio extends javax.swing.JFrame {
         menuhuespedes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/usuarios-multiples-en-silueta.png"))); // NOI18N
         menuhuespedes.setText("ABM Huespedes");
         menuhuespedes.setMaximumSize(new java.awt.Dimension(160, 32767));
-        menuhuespedes.setPreferredSize(new java.awt.Dimension(160, 32));
+        menuhuespedes.setPreferredSize(new java.awt.Dimension(140, 30));
         menuhuespedes.setRequestFocusEnabled(false);
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/003-lupa-de-busqueda.png"))); // NOI18N
         jMenuItem3.setText("Buscar Huesped");
+        jMenuItem3.setPreferredSize(new java.awt.Dimension(140, 30));
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -304,6 +314,7 @@ public class Inicio extends javax.swing.JFrame {
 
         menubuscarreserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/003-lupa-de-busqueda.png"))); // NOI18N
         menubuscarreserva.setText("Buscar Reserva");
+        menubuscarreserva.setPreferredSize(new java.awt.Dimension(140, 30));
         menubuscarreserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menubuscarreservaActionPerformed(evt);

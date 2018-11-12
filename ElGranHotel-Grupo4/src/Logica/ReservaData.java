@@ -94,6 +94,15 @@ public class ReservaData {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
+        
+        sql = "UPDATE reserva SET estado = 1 WHERE fecha_salida >= NOW()";
+        try {
+            Statement ps = con.createStatement();
+            ps.executeQuery(sql);
+  
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
     
     
@@ -145,7 +154,11 @@ public class ReservaData {
                 registro[4] = fechasa;
                 registro[5] = rs.getString("cantidad_personas");
                 registro[6] = rs.getString("importe");
-                registro[7] = rs.getString("estado");
+                if(Integer.parseInt(rs.getString("estado")) == 0){
+                    registro[7] = "Finalizada";
+                } else {
+                    registro[7] = "Activa";
+                }
           
                 modelo.addRow(registro);
             }
@@ -186,7 +199,11 @@ public class ReservaData {
                 registro[4] = fechasa;
                 registro[5] = rs.getString("cantidad_personas");
                 registro[6] = rs.getString("importe");
-                registro[7] = rs.getString("estado");
+                if(Integer.parseInt(rs.getString("estado")) == 0){
+                    registro[7] = "Finalizada";
+                } else {
+                    registro[7] = "Activa";
+                }
 
                 modelo.addRow(registro);
             }
@@ -198,7 +215,7 @@ public class ReservaData {
         } 
     }
     
-        //El siguiente metodo me permite buscar Por Huesped todas las reservas que ha hecho un huesped:
+    //El siguiente metodo me permite buscar Por Huesped todas las reservas que ha hecho un huesped:
     public DefaultTableModel buscarPorHuesped(int id_hpd) {
         DefaultTableModel modelo;
 
@@ -230,7 +247,7 @@ public class ReservaData {
                 
                 //A continuación si el estado es 0, entonces coloco la palabra Finalizada, si es 1 (reserva activa) entonces
                 //coloco la palabra Activa:
-                System.out.println(rs.getString("estado"));
+                //System.out.println(rs.getString("estado"));
                 if(Integer.parseInt(rs.getString("estado")) == 0){
                     registro[7] = "Finalizada";
                 } else {
@@ -277,7 +294,11 @@ public class ReservaData {
                 registro[4] = fechasa;
                 registro[5] = rs.getString("cantidad_personas");
                 registro[6] = rs.getString("importe");
-                registro[7] = rs.getString("estado");
+                if(Integer.parseInt(rs.getString("estado")) == 0){
+                    registro[7] = "Finalizada";
+                } else {
+                    registro[7] = "Activa";
+                }
 
                 modelo.addRow(registro);
             }

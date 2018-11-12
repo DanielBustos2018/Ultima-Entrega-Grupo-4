@@ -73,7 +73,7 @@ public class LoginAdministrador extends javax.swing.JFrame {
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(0, 204, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Ingrese sus credenciales"));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

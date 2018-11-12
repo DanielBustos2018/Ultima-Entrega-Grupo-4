@@ -321,8 +321,11 @@ public class BuscarTiposDeHabitacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tablatiposhabitacionMouseClicked
 
     private void btneliminartipohabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminartipohabitacionActionPerformed
-        //A continuacion elimino la habitacion seleccionada.
-        eliminarTipoDeHabitacion();
+        if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente eliminar esta huesped?",
+                "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            //A continuacion elimino el tipo dehabitacion seleccionada.
+            eliminarTipoDeHabitacion();
+        }
         
         //A continuacion desabilito los botones de modificar y eliminar hasta que el admin haga click en una reserva:
         btnmodificartipohabitacion.setEnabled(false);

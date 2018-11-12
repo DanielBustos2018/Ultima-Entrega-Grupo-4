@@ -253,9 +253,13 @@ public class BuscarHuespedes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tablahabitacionesMouseClicked
 
     private void btneliminarhabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarhabitacionActionPerformed
-        //A continuacion elimino el huesped.
-        eliminarHuesped();
         
+        if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente eliminar esta huesped?",
+                "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            //A continuacion elimino la habitacion seleccionada.
+            eliminarHuesped();
+        }
+
         //A continuacion desabilito los botones de modificar y eliminar hasta que el admin haga click en una reserva:
         btnmodificarhabitacion.setEnabled(false);
         btneliminarhabitacion.setEnabled(false);

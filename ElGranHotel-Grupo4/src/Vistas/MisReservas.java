@@ -29,9 +29,7 @@ public class MisReservas extends javax.swing.JInternalFrame {
     public MisReservas() {
         initComponents();
     }
-    
-    
-    
+ 
     public MisReservas(int id_huesped) {
         initComponents();
         this.id_hues = id_huesped;
@@ -66,7 +64,6 @@ public class MisReservas extends javax.swing.JInternalFrame {
         tablareservas.getColumnModel().getColumn(1).setMinWidth(0);
         tablareservas.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0);
         tablareservas.getTableHeader().getColumnModel().getColumn(1).setMinWidth(0);
-        
     }
     
 

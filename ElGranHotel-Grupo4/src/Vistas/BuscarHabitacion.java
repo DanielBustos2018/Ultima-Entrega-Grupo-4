@@ -26,19 +26,18 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
     private Conexion con;
     private int id_hab;
     //private int id_habi;
-    
+
     public BuscarHabitacion() {
         initComponents();
-        
+
         //A continuacion desabilito los botones de modificar y eliminar hasta que el admin haga click en una reserva:
         btnmodificarhabitacion.setEnabled(false);
         btneliminarhabitacion.setEnabled(false);
-                
+
         mostrarTodas();
     }
 
-    
-    public void mostrarTodas(){
+    public void mostrarTodas() {
         //Deshabilito el boton de ver todas:
         vertodas.setEnabled(false);
         try {
@@ -48,14 +47,13 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
             DefaultTableModel modelo;
             modelo = todas.mostrartodas();
 
-
-            tablahabitaciones.setModel(modelo);           
+            tablahabitaciones.setModel(modelo);
         } catch (Exception e) {
             System.out.println("error en mostrarTodas");
         }
     }
-    
-    public void mostrarLibres(){
+
+    public void mostrarLibres() {
         //Habilito el boton de ver todas:
         vertodas.setEnabled(true);
         try {
@@ -65,14 +63,13 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
             DefaultTableModel modelo;
             modelo = dispo.buscardisponibles();
 
-
-            tablahabitaciones.setModel(modelo);           
+            tablahabitaciones.setModel(modelo);
         } catch (Exception e) {
             System.out.println("error en mostrarLibres");
         }
     }
-    
-    public void mostrarOcupadas(){
+
+    public void mostrarOcupadas() {
         //Habilito el boton de ver todas:
         vertodas.setEnabled(true);
         try {
@@ -82,44 +79,41 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
             DefaultTableModel modelo;
             modelo = dispo.buscarOcupadas();
 
-
-            tablahabitaciones.setModel(modelo);           
+            tablahabitaciones.setModel(modelo);
         } catch (Exception e) {
             System.out.println("error en mostrarOcupadas");
         }
     }
-    
-    public void mostrarPorTipo(int id){
+
+    public void mostrarPorTipo(int id) {
         try {
             con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
             HabitacionData portipo = new HabitacionData(con);
 
             DefaultTableModel model;
             model = portipo.buscarPorTipo(id);
-            
-            tablahabitaciones.setModel(model);           
+
+            tablahabitaciones.setModel(model);
         } catch (Exception e) {
             System.out.println("error en mostrarPorTipo");
         }
     }
-    
-    
-    public void mostrarPorPiso(int id){
+
+    public void mostrarPorPiso(int id) {
         try {
             con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
             HabitacionData portipo = new HabitacionData(con);
 
             DefaultTableModel model;
             model = portipo.buscarPorPiso(id);
-            
-            tablahabitaciones.setModel(model);           
+
+            tablahabitaciones.setModel(model);
         } catch (Exception e) {
             System.out.println("error en mostrarPorPiso");
         }
     }
-    
-    
-    public void eliminarHabitacion(){
+
+    public void eliminarHabitacion() {
         try {
             con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
             HabitacionData elim = new HabitacionData(con);
@@ -130,8 +124,7 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
             System.out.println("error en eliminarHabitacion");
         }
     }
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -334,9 +327,13 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tablahabitacionesMouseClicked
 
     private void btneliminarhabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarhabitacionActionPerformed
-        //A continuacion elimino la habitacion seleccionada.
-        eliminarHabitacion();
-        
+
+        if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente eliminar esta habitación?",
+                "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            //A continuacion elimino la habitacion seleccionada.
+            eliminarHabitacion();
+        }
+
         //A continuacion desabilito los botones de modificar y eliminar hasta que el admin haga click en una reserva:
         btnmodificarhabitacion.setEnabled(false);
         btneliminarhabitacion.setEnabled(false);
@@ -373,36 +370,28 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
 
     private void buscarporhabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarporhabitacionActionPerformed
         //Aqui debo tomar el valor seleccionado del combo box para ver con que filtrare:
-        if ((cboxfiltros.getSelectedItem().toString()).equals("Seleccione")) { 
+        if ((cboxfiltros.getSelectedItem().toString()).equals("Seleccione")) {
             JOptionPane.showMessageDialog(null, "Elija una opcion de filtrado");
             txtvalorfiltro.setEnabled(true);
-        } 
-        
-        else if((cboxfiltros.getSelectedItem().toString()).equals("ID Tipo Habitacion") && txtvalorfiltro.getText().length()!=0){
+        } else if ((cboxfiltros.getSelectedItem().toString()).equals("ID Tipo Habitacion") && txtvalorfiltro.getText().length() != 0) {
             int id_seleccionado = Integer.parseInt(txtvalorfiltro.getText());
             mostrarPorTipo(id_seleccionado);
             //txtvalorfiltro.setEnabled(true);
-        }
-        
-        else if((cboxfiltros.getSelectedItem().toString()).equals("Libres")){
+        } else if ((cboxfiltros.getSelectedItem().toString()).equals("Libres")) {
             //txtvalorfiltro.setEnabled(false);
             mostrarLibres();
-        }
-        
-        else if((cboxfiltros.getSelectedItem().toString()).equals("Ocupadas")){
+        } else if ((cboxfiltros.getSelectedItem().toString()).equals("Ocupadas")) {
             //txtvalorfiltro.setEnabled(false);
             mostrarOcupadas();
-        }
-
-        else if((cboxfiltros.getSelectedItem().toString()).equals("Piso") && txtvalorfiltro.getText().length()!=0){
-            int id_seleccionado = Integer.parseInt(txtvalorfiltro.getText() );
+        } else if ((cboxfiltros.getSelectedItem().toString()).equals("Piso") && txtvalorfiltro.getText().length() != 0) {
+            int id_seleccionado = Integer.parseInt(txtvalorfiltro.getText());
             mostrarPorPiso(id_seleccionado);
 
         } else { //Aqui busco por piso:
             //txtvalorfiltro.setEnabled(true);
             JOptionPane.showMessageDialog(null, "Por favor, ingrese un valor de búsqueda");
         }
-        
+
         //habilito el boton ver todas:
         vertodas.setEnabled(true);
     }//GEN-LAST:event_buscarporhabitacionActionPerformed
@@ -426,12 +415,12 @@ public class BuscarHabitacion extends javax.swing.JInternalFrame {
 
     private void cboxfiltrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboxfiltrosMousePressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_cboxfiltrosMousePressed
 
     private void cboxfiltrosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboxfiltrosMouseEntered
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_cboxfiltrosMouseEntered
 
     private void cboxfiltrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboxfiltrosMouseClicked

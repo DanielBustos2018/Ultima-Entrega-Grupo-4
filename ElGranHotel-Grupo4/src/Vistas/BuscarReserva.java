@@ -36,8 +36,21 @@ public class BuscarReserva extends javax.swing.JInternalFrame {
         //A continuacion desabilito los botones de modificar y eliminar hasta que el admin haga click en una reserva:
         btnmodificarreserva.setEnabled(false);
         btneliminarreserva.setEnabled(false);
-
+        verificarFechasReservas();
         mostrarTodas();
+    }
+
+    //El siguiente metodo invoca al metodo verificarFechaSalida de la clase ReservaData en el cual se verifica
+    //que si la fecha de salida es menor a la actual, entonces la reserva pasa de estado 1 a 0, es decir de activa a inactiva.
+    public void verificarFechasReservas() {
+        try {
+            con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
+            ReservaData thd = new ReservaData(con);
+            thd.verificarFechaSalida();
+
+        } catch (Exception e) {
+            System.out.println("error reservacliente.java");
+        }
     }
 
     public void mostrarTodas() {
@@ -56,7 +69,6 @@ public class BuscarReserva extends javax.swing.JInternalFrame {
             System.out.println("error en mostrarTodas");
         }
     }
-    
 
     public void mostrarPorHab(int id) {
         try {
@@ -316,11 +328,14 @@ public class BuscarReserva extends javax.swing.JInternalFrame {
         //Al eliminar la reserva, debo volver a habilitar la habitacion que estaba asiganda a esa reserva, entonces
         //primero obtengo el id de la habitacion relacionada a esa reserva:
 
-        obtenerIdHab();
-        habilitarHab();
+        if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente eliminar esta reserva?",
+                "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            obtenerIdHab();
+            habilitarHab();
 
-        //A continuacion elimino la reserva seleccionada.
-        eliminarReserva();
+            //A continuacion elimino la reserva seleccionada.
+            eliminarReserva();
+        }
 
         //A continuacion desabilito los botones de modificar y eliminar hasta que el admin haga click en una reserva:
         btnmodificarreserva.setEnabled(false);
