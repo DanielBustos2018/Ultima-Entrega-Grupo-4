@@ -127,7 +127,6 @@ public class ReservaData {
         }
     }
     
-    
     //El siguiente método permite mostrar todas las reservas:
     public DefaultTableModel mostrartodas() {
         DefaultTableModel modelo;
