@@ -49,7 +49,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
     DefaultTableModel modelohabs;
 
     public ReservaCliente() {
-       initComponents();
+        initComponents();
         btnsiguientehab.setEnabled(false); //Deshabilito el botón siguiente para elegir un tipo deseado
         
         //A continuación seteo los nombres de las columnas de ámbas tablas, pero en este caso, para el huesped, solo muestro
@@ -157,6 +157,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
             modelo = thd.buscardisponibles(id, diassalida,costototal);
 
             tablahabs.setModel(modelo);
+            ocultarColumnasHab();
 
         } catch (Exception e) {
             System.out.println("error reservacliente.java");
@@ -432,7 +433,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -479,7 +480,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(661, Short.MAX_VALUE)
                 .addComponent(btnsiguientehab, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -497,8 +498,8 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(8, 8, 8)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(68, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(52, Short.MAX_VALUE)))
         );
 
         labeltipos1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -593,7 +594,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
         //ventana de ReservaCliente
                
         registrarReserva();
-
+        
         //Aqui debo pasar a la ventana de login/registro.
         escritorio.removeAll();
         escritorio.repaint();

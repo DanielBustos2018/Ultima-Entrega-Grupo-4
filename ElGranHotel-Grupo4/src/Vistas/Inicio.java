@@ -72,6 +72,8 @@ public class Inicio extends javax.swing.JFrame {
         menutipos.setEnabled(true);
         menuhuespedes.setEnabled(true);
         menureservas.setEnabled(true);
+        ingresohuesped.setEnabled(false);
+        reservahuesped.setEnabled(false);
         this.setTitle("Sistema de Administración de Gran Hotel Safari - Versión 1.0 - Grupo 4");
     }
     
@@ -86,6 +88,7 @@ public class Inicio extends javax.swing.JFrame {
         menureservas.setEnabled(false);
         huespedmisreservas.setEnabled(true);
         huespedmisdatos.setEnabled(true);
+        ingresohuesped.setEnabled(false);
         this.setTitle("Sistema de Administración de Gran Hotel Safari - Versión 1.0 - Grupo 4");
     }
 
@@ -121,7 +124,7 @@ public class Inicio extends javax.swing.JFrame {
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
+        reservahuesped = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         ingresohuesped = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
@@ -208,16 +211,16 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        cutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/001-anadir-nuevo-documento.png"))); // NOI18N
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Nueva reserva");
-        cutMenuItem.setPreferredSize(new java.awt.Dimension(140, 30));
-        cutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        reservahuesped.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/001-anadir-nuevo-documento.png"))); // NOI18N
+        reservahuesped.setMnemonic('t');
+        reservahuesped.setText("Nueva reserva");
+        reservahuesped.setPreferredSize(new java.awt.Dimension(140, 30));
+        reservahuesped.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cutMenuItemActionPerformed(evt);
+                reservahuespedActionPerformed(evt);
             }
         });
-        editMenu.add(cutMenuItem);
+        editMenu.add(reservahuesped);
         editMenu.add(jSeparator1);
 
         ingresohuesped.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Archivos/002-pagina-de-inicio.png"))); // NOI18N
@@ -352,7 +355,7 @@ public class Inicio extends javax.swing.JFrame {
         form.setVisible(true);
     }//GEN-LAST:event_ingresohuespedActionPerformed
 
-    private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
+    private void reservahuespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservahuespedActionPerformed
         escritorio.removeAll();
         escritorio.repaint();
         ReservaCliente br = new ReservaCliente();
@@ -360,7 +363,7 @@ public class Inicio extends javax.swing.JFrame {
         //escritorio.add(form);
         //form.toFront();
         //form.setVisible(true);
-    }//GEN-LAST:event_cutMenuItemActionPerformed
+    }//GEN-LAST:event_reservahuespedActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
 
@@ -500,7 +503,6 @@ public class Inicio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenu editMenu;
     public static javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenu fileMenu;
@@ -527,6 +529,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenu menureservas;
     private javax.swing.JMenu menutipos;
     private javax.swing.JMenuItem openMenuItem;
+    private javax.swing.JMenuItem reservahuesped;
     // End of variables declaration//GEN-END:variables
 
 }

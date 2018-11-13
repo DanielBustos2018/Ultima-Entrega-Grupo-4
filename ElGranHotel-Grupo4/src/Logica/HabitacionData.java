@@ -95,7 +95,7 @@ public class HabitacionData {
     public DefaultTableModel buscardisponibles(int id_tipo, int cant_noches, double precio_total) {
         DefaultTableModel modelo;
 
-        String[] titulos = {"ID", "Numero", "Piso", "Noches", "Costo toal"};    //Defino los nombres de las columnas de la tabla
+        String[] titulos = {"ID","Numero", "Piso", "Noches", "Costo toal"};    //Defino los nombres de las columnas de la tabla
         String[] registro = new String[5];  //Defino rgistro que ira guardando las filas con 3 parametros
 
         modelo = new DefaultTableModel(null, titulos);

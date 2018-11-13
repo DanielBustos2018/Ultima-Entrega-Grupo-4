@@ -15,10 +15,7 @@ import static Vistas.Inicio.escritorio;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author servi
- */
+
 public class SesionReservaHuesped extends javax.swing.JInternalFrame {
 
     private int id_reserva;
@@ -342,7 +339,7 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
             System.out.println("error en boton confirmarAction");
         }
         
-        JOptionPane.showMessageDialog(null, "Reserva Resgitrada Exitosamente - ID = " + id_reserva);
+        JOptionPane.showMessageDialog(null, "Reserva Resgitrada Exitosamente");
         
         /*this.dispose();
         Inicio ini = new Inicio(true, this.id_huesped);
