@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  *
  * @author servi
  */
-public class IngresoLuegoDeReserva extends javax.swing.JInternalFrame {
+public class IngresoLuegoDeReserva extends javax.swing.JInternalFrame{
 
     private int id_reserva; //Almaceno el ID de la reserva creada por el cliente que estoy por comprobar
     private int id_huesped;

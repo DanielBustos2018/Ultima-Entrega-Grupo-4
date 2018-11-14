@@ -7,8 +7,6 @@
 //                          CLASE HABITACION DATA                             //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
-
-
 package Logica;
 
 import Datos.Habitacion;
@@ -21,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class HabitacionData {
+
     String sql = "";                    //Variable en la que almacenaré la consulta SQL
     private Connection con = null;
 
@@ -31,16 +30,16 @@ public class HabitacionData {
             JOptionPane.showMessageDialog(null, "No se ha podido establecer la conexion con la base de datos (Habitacion Data) error: " + e);
         }
     }
-    
+
     //El siguiente método permite mostrar todas las habitaciones. Las mismas se cargan en un Objeto tipo Tabla:
     public DefaultTableModel mostrartodas() {
         DefaultTableModel modelo;
 
-        String[] titulos = {"ID", "Id_tipoHabitacion", "Numero" , "Piso", "Estado"};
+        String[] titulos = {"ID", "Id_tipoHabitacion", "Numero", "Piso", "Estado"};
         String[] registro = new String[5];
 
-        modelo = new DefaultTableModel(null, titulos);      
-        sql = "SELECT * FROM habitacion"; 
+        modelo = new DefaultTableModel(null, titulos);
+        sql = "SELECT * FROM habitacion";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -59,13 +58,12 @@ public class HabitacionData {
         }
         return modelo;
     }
-    
-    
+
     //El siguiente metodo busca todas las habitaciones disponibles (metodo sobrecargado):
     public DefaultTableModel buscardisponibles() {
         DefaultTableModel modelo;
 
-        String[] titulos = {"ID", "Id_tipoHabitacion", "Numero" , "Piso", "Estado"};
+        String[] titulos = {"ID", "Id_tipoHabitacion", "Numero", "Piso", "Estado"};
         String[] registro = new String[5];  //Defino rgistro que ira guardando las filas con 3 parametros
 
         modelo = new DefaultTableModel(null, titulos);
@@ -88,14 +86,14 @@ public class HabitacionData {
         }
         return modelo;
     }
-    
+
     //El siguiente método permite buscar el listado de habitaciones disponibles a partir de su tipo, en una tabla (retorna una tabla).
     //Observemos que recibe 3 parametros: el id del tipo de habitacion, la cantidad de noches y el precio total. Estos ultimos dos son para
     //rellenar la tabla modelo y retornarle ya lista para mostrar:
     public DefaultTableModel buscardisponibles(int id_tipo, int cant_noches, double precio_total) {
         DefaultTableModel modelo;
 
-        String[] titulos = {"ID","Numero", "Piso", "Noches", "Costo toal"};    //Defino los nombres de las columnas de la tabla
+        String[] titulos = {"ID", "Numero", "Piso", "Noches", "Costo toal"};    //Defino los nombres de las columnas de la tabla
         String[] registro = new String[5];  //Defino rgistro que ira guardando las filas con 3 parametros
 
         modelo = new DefaultTableModel(null, titulos);
@@ -103,7 +101,7 @@ public class HabitacionData {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id_tipo);
-            
+
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -115,23 +113,23 @@ public class HabitacionData {
 
                 modelo.addRow(registro);
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
         }
         return modelo;
     }
-    
+
     //El siguiente metodo busca todas las habitaciones ocupadas:
     public DefaultTableModel buscarOcupadas() {
         DefaultTableModel modelo;
 
-        String[] titulos = {"ID", "Id_tipoHabitacion", "Numero" , "Piso", "Estado"};
+        String[] titulos = {"ID", "Id_tipoHabitacion", "Numero", "Piso", "Estado"};
         String[] registro = new String[5];  //Defino rgistro que ira guardando las filas con 5 parametros
         modelo = new DefaultTableModel(null, titulos);
         sql = "SELECT * FROM habitacion WHERE estado = 1 ORDER BY id_habitacion";
         try {
-            PreparedStatement ps = con.prepareStatement(sql);         
+            PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 registro[0] = rs.getString("id_habitacion");
@@ -152,7 +150,7 @@ public class HabitacionData {
     public DefaultTableModel buscarPorTipo(int id_tip) {
         DefaultTableModel modelo;
 
-        String[] titulos = {"ID", "Id_tipoHabitacion", "Numero" , "Piso", "Estado"};
+        String[] titulos = {"ID", "Id_tipoHabitacion", "Numero", "Piso", "Estado"};
         String[] registro = new String[5];  //Defino rgistro que ira guardando las filas con 3 parametros
         modelo = new DefaultTableModel(null, titulos);
         sql = "SELECT * FROM habitacion WHERE id_tipoHabitacion = ? ORDER BY id_habitacion";
@@ -175,12 +173,12 @@ public class HabitacionData {
         }
         return modelo;
     }
-     
+
     //El siguiente metodo busca las habitaciones por piso:
     public DefaultTableModel buscarPorPiso(int id_pis) {
         DefaultTableModel modelo;
 
-        String[] titulos = {"ID", "Id_tipoHabitacion", "Numero" , "Piso", "Estado"};
+        String[] titulos = {"ID", "Id_tipoHabitacion", "Numero", "Piso", "Estado"};
         String[] registro = new String[5];  //Defino rgistro que ira guardando las filas con 3 parametros
         modelo = new DefaultTableModel(null, titulos);
         sql = "SELECT * FROM habitacion WHERE piso = ? ORDER BY id_habitacion";
@@ -203,7 +201,7 @@ public class HabitacionData {
         }
         return modelo;
     }
-    
+
     //El siguiente método permitirá insertar una nueva habitacion:
     public void insertar(int id_tipo, int num, int piso, int estado) {
         sql = "INSERT INTO habitacion (id_tipoHabitacion, numero, piso, estado) VALUES ( ? , ? , ? , ? )";
@@ -238,16 +236,16 @@ public class HabitacionData {
             JOptionPane.showConfirmDialog(null, e);
         }
     }
-    
+
     //El siguiente método permite buscar por id una habitacion:
     public Habitacion buscarDatosHabitacion(int id_hab) {
         Habitacion habi = new Habitacion(); //Instancio un objeto tipo Huesped para almacenar los datos leidos
-        sql = "SELECT * FROM habitacion WHERE id_habitacion =" + id_hab ;
+        sql = "SELECT * FROM habitacion WHERE id_habitacion =" + id_hab;
         try {
 
             Statement ps = con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
-            
+
             //Si existe este huesped, entonces se ingresara al siguiente WHILE:
             while (rs.next()) {
                 habi.setId_habitacion(rs.getInt("id_habitacion"));
@@ -262,7 +260,7 @@ public class HabitacionData {
         }
         return habi;
     }
-    
+
     //El siguiente método permite obtener el ID del tipo de habitacion de una habitación especifica:
     public int buscarHabitacion(int id_hab) {
         int id_tipo = 0;
@@ -270,7 +268,7 @@ public class HabitacionData {
 
         try {
             Statement ps = con.createStatement();
-            ResultSet rs = ps.executeQuery(sql); 
+            ResultSet rs = ps.executeQuery(sql);
             //Si existe este huesped, entonces se ingresara al siguiente WHILE:
             while (rs.next()) {
                 id_tipo = rs.getInt("id_tipoHabitacion");
@@ -321,6 +319,24 @@ public class HabitacionData {
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
         }
+    }
+
+    public int contarHabs(int idtip) {
+        int canti = 0;
+        sql = "SELECT COUNT(*) AS total FROM habitacion WHERE id_tipoHabitacion = " + idtip;
+        try {
+            Statement ps = con.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            if (rs.next()) {
+                canti = Integer.parseInt(rs.getString("total"));
+            } else {
+                
+            }
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+        }
+
+        return canti;
     }
 
 }

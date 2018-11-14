@@ -13,6 +13,7 @@ import Logica.HuespedData;
 import Logica.ReservaData;
 import static Vistas.Inicio.escritorio;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
 /**
@@ -85,8 +86,9 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
     }
 
     public void mostrarReserva() {
-        lblfechallegada.setText("" + res.getFecha_entrada());
-        lblfechasalida.setText("" + res.getFecha_salida());
+        //debo invertir la fecha para que en vez de mostrarse de la forma yyyy-mm-dd se muestre dd-mm-yyyy:
+        String fechaen = new SimpleDateFormat("dd-MM-yyyy").format(res.getFecha_entrada());
+        String fechasa = new SimpleDateFormat("dd-MM-yyyy").format(res.getFecha_salida());
         lbladultos.setText("" + this.adultos);
         lblniños.setText("" + this.niños);
         int noches = (int) (res.getImporte() / precio_noche);
@@ -125,7 +127,7 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(51, 204, 0));
+        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -149,11 +151,11 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("Precio por noche:");
+        jLabel6.setText("Precio por noche ($):");
 
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("Precio total");
+        jLabel7.setText("Precio total ($):");
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -180,19 +182,19 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
 
         lblnoches.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblnoches.setForeground(new java.awt.Color(0, 102, 51));
-        lblnoches.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblnoches.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         lblprecionoche.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblprecionoche.setForeground(new java.awt.Color(0, 102, 51));
-        lblprecionoche.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblprecionoche.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         lblpreciototal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblpreciototal.setForeground(new java.awt.Color(0, 102, 51));
-        lblpreciototal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblpreciototal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         lblhabitacion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblhabitacion.setForeground(new java.awt.Color(0, 102, 51));
-        lblhabitacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblhabitacion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         descartar.setText("DESCARTAR RESERVA");
         descartar.addActionListener(new java.awt.event.ActionListener() {
@@ -237,12 +239,13 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblpreciototal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblprecionoche, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblnoches, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblhabitacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnconfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnconfirmar)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lblhabitacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                        .addComponent(lblnoches, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblprecionoche, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblpreciototal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(30, 30, 30))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(144, 144, 144)

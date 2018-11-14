@@ -22,7 +22,7 @@ public class PrimerVista extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         verificarFechasReservas();
-        mostrarTodas();
+        modificarEstadoHabs();
     }
 
     
@@ -33,13 +33,13 @@ public class PrimerVista extends javax.swing.JFrame {
             con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
             ReservaData thd = new ReservaData(con);
             thd.verificarFechaSalida();
-
+            
         } catch (Exception e) {
             System.out.println("error reservacliente.java");
         }
     }
 
-    public void mostrarTodas() {
+    public void modificarEstadoHabs() {
         try {
             con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
             ReservaData todas = new ReservaData(con);
@@ -58,9 +58,12 @@ public class PrimerVista extends javax.swing.JFrame {
                 //System.out.println(idhab);
                 //Aqui verifico lo siguiente: si el estado de la reserva es 0, entonces obtengo el ID de la habitacion,
                 //la busco y le cambio el estado de ocupada a libre (e caso de que este ocupada):
-                if (estado.equals("0")){
-                    id_habit = Integer.parseInt(idhab);                    
+                if (estado.equals("Finalizada")){
+                    id_habit = Integer.parseInt(idhab);    
                     desocuparHabitacion(id_habit);
+                } else {
+                    id_habit = Integer.parseInt(idhab);    
+                    ocuparHabitacion(id_habit);
                 }
             }
 
@@ -75,6 +78,17 @@ public class PrimerVista extends javax.swing.JFrame {
             HabitacionData porhab = new HabitacionData(con);
 
             porhab.desocupar(id);
+        } catch (Exception e) {
+            System.out.println("error desocuparHabitacion");
+        }
+    }
+    
+    public void ocuparHabitacion(int id){
+        try {
+            con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
+            HabitacionData porhab = new HabitacionData(con);
+
+            porhab.ocupar(id);
         } catch (Exception e) {
             System.out.println("error desocuparHabitacion");
         }

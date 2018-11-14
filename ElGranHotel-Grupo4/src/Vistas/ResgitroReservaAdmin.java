@@ -53,14 +53,14 @@ public class ResgitroReservaAdmin extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public boolean verificarHuespedID() {
-        login_id = Integer.parseInt(txtidhuesped.getText());
+    public boolean verificarHuespedDNI() {
+        login_dni = txtidhuesped.getText();
 
         try {
             con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
             HuespedData hd = new HuespedData(con);
 
-            h = hd.buscarHuesped(login_id);
+            h = hd.buscarHuesped(login_dni);
 
             if (h.getId_huesped() == 0) { //Significa que no encontro ningun huesped
                 existe = false;
@@ -129,7 +129,7 @@ public class ResgitroReservaAdmin extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de Huesped"));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("ID Huesped:");
+        jLabel1.setText("DNI Huesped:");
 
         txtidhuesped.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,8 +167,8 @@ public class ResgitroReservaAdmin extends javax.swing.JInternalFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtidhuesped, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(90, Short.MAX_VALUE))))
@@ -320,7 +320,7 @@ public class ResgitroReservaAdmin extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -330,11 +330,11 @@ public class ResgitroReservaAdmin extends javax.swing.JInternalFrame {
         //Aqui debo leer los datos ingresados por el cliente y verificar que el mismo exista en la base de datos.
         //Primero compruebo que los campos no esten vacios:
         if (txtidhuesped.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Ingrese el ID del Huesped");
+            JOptionPane.showMessageDialog(null, "Ingrese el DNI del Huesped");
         } 
         else{
-            //En caso de que se haya ingresado el id paso a verificar si el huesped existe
-            if (verificarHuespedID()) {
+            //En caso de que se haya ingresado el dni paso a verificar si el huesped existe
+            if (verificarHuespedDNI()) {
 
                 //Si el huesped existe, entonces muestro su nombre, apellido y DNI:
                 System.out.println("Existe");
@@ -353,7 +353,7 @@ public class ResgitroReservaAdmin extends javax.swing.JInternalFrame {
                 sh.setVisible(true);
 
             } else {
-                JOptionPane.showMessageDialog(null, "El ID ingresado no corresponde a ningún Huesped registrado");
+                JOptionPane.showMessageDialog(null, "El DNI ingresado no corresponde a ningún Huesped registrado");
             }
         }
 

@@ -49,6 +49,8 @@ public class TipoDeHabitacionData {
 
             ps.setInt(6, id_tipohab);           
             ps.executeUpdate();
+            
+            ps.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }

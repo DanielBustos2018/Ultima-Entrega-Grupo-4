@@ -16,6 +16,7 @@ import javax.swing.JInternalFrame;
 public class Inicio extends javax.swing.JFrame {
 
     private int id_huesped;
+    private boolean huespediniciado = false;
     
     
     public Inicio() {
@@ -78,6 +79,7 @@ public class Inicio extends javax.swing.JFrame {
     }
     
     public Inicio(boolean admin, int id_huesped) {
+        this.huespediniciado = admin;
         initComponents();
         this.id_huesped = id_huesped;
         escritorio.setBorder(new ImagenFondo());
@@ -358,7 +360,7 @@ public class Inicio extends javax.swing.JFrame {
     private void reservahuespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservahuespedActionPerformed
         escritorio.removeAll();
         escritorio.repaint();
-        ReservaCliente br = new ReservaCliente();
+        ReservaCliente br = new ReservaCliente(this.id_huesped);
         centrar(br);
         //escritorio.add(form);
         //form.toFront();

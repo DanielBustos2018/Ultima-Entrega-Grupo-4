@@ -24,96 +24,114 @@ import javax.swing.table.DefaultTableModel;
 public class ReservaCliente extends javax.swing.JInternalFrame {
 
     private Conexion con;
-    
+
     int diassalida = 0;
     int id_hab_elegida = 0;
     int nro_hab_elegida;
     int adultos;
     int niños;
     int total = 0;
-    
+
     int id_reserva;
-    
+
     private Date f_llegada;
     private Date f_salida;
     private double costototal;
-    
+    private int id_huespedinicado = 0;
     private int id = 0;
     private String tipo = null;
     private int capacidad = 0;
     private int cant_camas = 0;
     private String tipo_cama = null;
     private double precio_noche = 0;
-    
+
     DefaultTableModel modelotipos;
     DefaultTableModel modelohabs;
 
     public ReservaCliente() {
         initComponents();
         btnsiguientehab.setEnabled(false); //Deshabilito el botón siguiente para elegir un tipo deseado
-        
+
         //A continuación seteo los nombres de las columnas de ámbas tablas, pero en este caso, para el huesped, solo muestro
         //parametros importantes y quito ID, Estado, etc.:
-        String[] titulos = {"ID", "Tipo", "Capacidad" , "Cantidad de camas", "Tipo de cama", "Precio por noche"};
+        String[] titulos = {"ID", "Tipo", "Capacidad", "Cantidad de camas", "Tipo de cama", "Precio por noche"};
         modelotipos = new DefaultTableModel(null, titulos);
         tablatiposhab.setModel(modelotipos);
         String[] tituloshab = {"ID", "Numero", "Piso", "Noches", "Costo toal"};
         modelohabs = new DefaultTableModel(null, tituloshab);
         tablahabs.setModel(modelohabs);
-        
+
         //A continuacion deshabilito las columnas de la tabla habitaciones que no necesita ver el huesped:
         ocultarColumnasHab();
-        
+
         //A continuacion deshabilito las columnas de la tabla tipos de habitacion que no necesita ver el huesped:
         ocultarColumnasTipos();
-        
     }
-    
-    public void ocultarColumnasHab(){
+
+    public ReservaCliente(int id_huespediniciado) {
+        initComponents();
+        this.id_huespedinicado = id_huespediniciado;
+        btnsiguientehab.setEnabled(false); //Deshabilito el botón siguiente para elegir un tipo deseado
+
+        //A continuación seteo los nombres de las columnas de ámbas tablas, pero en este caso, para el huesped, solo muestro
+        //parametros importantes y quito ID, Estado, etc.:
+        String[] titulos = {"ID", "Tipo", "Capacidad", "Cantidad de camas", "Tipo de cama", "Precio por noche"};
+        modelotipos = new DefaultTableModel(null, titulos);
+        tablatiposhab.setModel(modelotipos);
+        String[] tituloshab = {"ID", "Numero", "Piso", "Noches", "Costo toal"};
+        modelohabs = new DefaultTableModel(null, tituloshab);
+        tablahabs.setModel(modelohabs);
+
+        //A continuacion deshabilito las columnas de la tabla habitaciones que no necesita ver el huesped:
+        ocultarColumnasHab();
+
+        //A continuacion deshabilito las columnas de la tabla tipos de habitacion que no necesita ver el huesped:
+        ocultarColumnasTipos();
+    }
+
+    public void ocultarColumnasHab() {
         //Columna ID
         tablahabs.getColumnModel().getColumn(0).setMaxWidth(0);
         tablahabs.getColumnModel().getColumn(0).setMinWidth(0);
         tablahabs.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
         tablahabs.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
     }
-    
-    public void ocultarColumnasTipos(){
+
+    public void ocultarColumnasTipos() {
         //Columna ID
         tablatiposhab.getColumnModel().getColumn(0).setMaxWidth(0);
         tablatiposhab.getColumnModel().getColumn(0).setMinWidth(0);
         tablatiposhab.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
         tablatiposhab.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
     }
-    
-    
-    public void registrarReserva(){
+
+    public void registrarReserva() {
         Reserva r = new Reserva();
-        
+
         java.util.Date utilStartDate = fechallegada.getDate();
         java.sql.Date f_llegada = new java.sql.Date(utilStartDate.getTime());
         java.util.Date utilEndDate = fechasalida.getDate();
         java.sql.Date f_salida = new java.sql.Date(utilEndDate.getTime());
-        
+
         r.setId_habitacion(id_hab_elegida);
         r.setFecha_entrada(f_llegada);
         r.setFecha_salida(f_salida);
         r.setImporte(costototal);
         r.setCantidad_personas(total);
         r.setEstado(2);
-        
+
         try {
             con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
             ReservaData rd = new ReservaData(con);
-            
+
             //En id_reserva, obtengo el ID asignado a esta reserva, esto me permitirá luego guardar el ID del huesped en
             //la misma reserva.
             id_reserva = rd.insertar(r);
-            
+
         } catch (Exception e) {
             System.out.println("error en registrarReserva");
         }
     }
-    
 
     public void mostrarTipos(int cantidad) {
         try {
@@ -133,10 +151,10 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
             } else {
                 tablatiposhab.setModel(modelo);
             }
-            
+
             //A continuacion deshabilito las columnas de la tabla habitaciones que no necesita ver el huesped:
             ocultarColumnasHab();
-        
+
             //A continuacion deshabilito las columnas de la tabla tipos de habitacion que no necesita ver el huesped:
             ocultarColumnasTipos();
 
@@ -144,8 +162,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
             System.out.println("error mostrartipos.java");
         }
     }
-    
-   
+
     public void mostrarHabitaciones() {
         try {
             costototal = precio_noche * diassalida;
@@ -154,7 +171,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
             HabitacionData thd = new HabitacionData(con);
 
             DefaultTableModel modelo;
-            modelo = thd.buscardisponibles(id, diassalida,costototal);
+            modelo = thd.buscardisponibles(id, diassalida, costototal);
 
             tablahabs.setModel(modelo);
             ocultarColumnasHab();
@@ -169,12 +186,12 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
         fechasalida.setCalendar(null);
         cboxadultos.setSelectedIndex(0);
         cboxniños.setSelectedIndex(0);
-        
+
         tablatiposhab.setModel(modelotipos);
         tablahabs.setModel(modelohabs);
-        
+
         //A continuacion deshabilito las columnas de la tabla habitaciones que no necesita ver el huesped:
-        ocultarColumnasHab();  
+        ocultarColumnasHab();
         //A continuacion deshabilito las columnas de la tabla tipos de habitacion que no necesita ver el huesped:
         ocultarColumnasTipos();
     }
@@ -275,7 +292,7 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
             adultos = Integer.parseInt(cboxadultos.getSelectedItem().toString());   //OBTENGO LA CANTIDAD DE ADULTOS
             niños = Integer.parseInt(cboxniños.getSelectedItem().toString());       //OBTENGO LA CANTIDAD DE NIÑOS
             total = adultos + niños;    //SUMO LA CANTIDAD DE ADULTOS Y NIÑOS
-            mostrarTipos(total);           
+            mostrarTipos(total);
         }
     }
 
@@ -569,14 +586,14 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
         cant_camas = Integer.valueOf(String.valueOf(tablatiposhab.getValueAt(seleccion, 3)));
         tipo_cama = String.valueOf(tablatiposhab.getValueAt(seleccion, 4));
         precio_noche = Integer.valueOf(String.valueOf(tablatiposhab.getValueAt(seleccion, 5)));
-        
+
         mostrarHabitaciones();
         //System.out.println(id + " " + tipo + " " + capacidad + " " + cant_camas + " " + precio_noche);
     }//GEN-LAST:event_tablatiposhabMouseClicked
 
     private void tablahabsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablahabsMouseClicked
         btnsiguientehab.setEnabled(true);  //Habilito el botón siguiente para elegir un tipo deseado
-        
+
         //Aqui debo tomar el id de la habitacion seleccionada por el cliente y luego
         //pasar a la ventana de login/registro.
         int selec = tablahabs.rowAtPoint(evt.getPoint());
@@ -592,19 +609,31 @@ public class ReservaCliente extends javax.swing.JInternalFrame {
         //Lo que hare ahora es registrar esta reserva, y luego, en la ventana de confirmacion, si el cliente confirma
         //entonces la dejo, si el cliente la descarta, entonces la elimino, y si el cliente la quiere modificar, vuelvo a la 
         //ventana de ReservaCliente
-               
+
         registrarReserva();
-        
-        //Aqui debo pasar a la ventana de login/registro.
-        escritorio.removeAll();
-        escritorio.repaint();
-        IngresoLuegoDeReserva log = new IngresoLuegoDeReserva(id_reserva, adultos, niños, nro_hab_elegida, precio_noche);
-        int x = (escritorio.getWidth() / 2) - log.getWidth() / 2;
-        int y = (escritorio.getHeight() / 2) - log.getHeight() / 2;
-        log.setLocation(x, y);
-        escritorio.add(log);
-        log.toFront();
-        log.setVisible(true);
+
+        //Aqui debo pasar a la ventana de login/registro en caso de no haber iniciado sesion:
+        if (this.id_huespedinicado > 0) {
+            escritorio.removeAll();
+            escritorio.repaint();
+            SesionReservaHuesped sh = new SesionReservaHuesped(this.id_reserva, this.id_huespedinicado, adultos, niños, nro_hab_elegida, precio_noche);
+            int x = (escritorio.getWidth() / 2) - sh.getWidth() / 2;
+            int y = (escritorio.getHeight() / 2) - sh.getHeight() / 2;
+            sh.setLocation(x, y);
+            escritorio.add(sh);
+            sh.toFront();
+            sh.setVisible(true);
+        } else {
+            escritorio.removeAll();
+            escritorio.repaint();
+            IngresoLuegoDeReserva log = new IngresoLuegoDeReserva(id_reserva, adultos, niños, nro_hab_elegida, precio_noche);
+            int x = (escritorio.getWidth() / 2) - log.getWidth() / 2;
+            int y = (escritorio.getHeight() / 2) - log.getHeight() / 2;
+            log.setLocation(x, y);
+            escritorio.add(log);
+            log.toFront();
+            log.setVisible(true);
+        }
     }//GEN-LAST:event_btnsiguientehabActionPerformed
 
     /**

@@ -13,8 +13,8 @@ import Logica.HuespedData;
 import Logica.ReservaData;
 import static Vistas.Inicio.escritorio;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
-
 
 public class SesionReservaHuesped extends javax.swing.JInternalFrame {
 
@@ -39,7 +39,6 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
         this.precio_noche = precio_noche;
 
         //System.out.println(this.id_reserva + " - " + this.id_huesped);
-
         //Como tengo los datos de la reserva y el huesped, procedo a mostrar esta informacion mediante las siguientes funciones:
         obtenerHuesped();
         obtenerReserva();
@@ -82,8 +81,11 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
     }
 
     public void mostrarReserva() {
-        lblfechallegada.setText(""+res.getFecha_entrada());
-        lblfechasalida.setText(""+res.getFecha_salida());
+        //debo invertir la fecha para que en vez de mostrarse de la forma yyyy-mm-dd se muestre dd-mm-yyyy:
+        String fechaen = new SimpleDateFormat("dd-MM-yyyy").format(res.getFecha_entrada());
+        String fechasa = new SimpleDateFormat("dd-MM-yyyy").format(res.getFecha_salida());
+        lblfechallegada.setText("" + res.getFecha_entrada());
+        lblfechasalida.setText("" + res.getFecha_salida());
         lbladultos.setText("" + this.adultos);
         lblniños.setText("" + this.niños);
         int noches = (int) (res.getImporte() / precio_noche);
@@ -146,11 +148,11 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("Precio por noche:");
+        jLabel6.setText("Precio por noche ($):");
 
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("Precio total");
+        jLabel7.setText("Precio total ($):");
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -177,19 +179,19 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
 
         lblnoches.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblnoches.setForeground(new java.awt.Color(0, 102, 51));
-        lblnoches.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblnoches.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         lblprecionoche.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblprecionoche.setForeground(new java.awt.Color(0, 102, 51));
-        lblprecionoche.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblprecionoche.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         lblpreciototal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblpreciototal.setForeground(new java.awt.Color(0, 102, 51));
-        lblpreciototal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblpreciototal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         lblhabitacion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblhabitacion.setForeground(new java.awt.Color(0, 102, 51));
-        lblhabitacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblhabitacion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         btndescartar.setText("DESCARTAR RESERVA");
         btndescartar.addActionListener(new java.awt.event.ActionListener() {
@@ -234,12 +236,13 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblpreciototal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblprecionoche, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblnoches, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblhabitacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnconfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnconfirmar)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lblhabitacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                        .addComponent(lblnoches, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblprecionoche, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblpreciototal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(30, 30, 30))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(144, 144, 144)
@@ -324,11 +327,11 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
             con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
             ReservaData rds = new ReservaData(con);
             rds.insertarIdHuesped(this.id_reserva, this.id_huesped);
-            
+
         } catch (Exception e) {
             System.out.println("error en boton confirmarAction");
         }
-        
+
         //Ademas, debo cambiar el estado de la habitacion a ocupada (1):
         try {
             con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
@@ -338,9 +341,9 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             System.out.println("error en boton confirmarAction");
         }
-        
+
         JOptionPane.showMessageDialog(null, "Reserva Resgitrada Exitosamente");
-        
+
         /*this.dispose();
         Inicio ini = new Inicio(true, this.id_huesped);
         ini.setVisible(true);*/
@@ -351,7 +354,7 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
 
     private void btndescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndescartarActionPerformed
         //Aqui debo eliminar la reserva guardada temporalmente y luego volver a buscarPorHuesped reservas
-        
+
         try {
             con = new Conexion("jdbc:mysql://localhost/elgranhotel", "root", "");
             ReservaData rdse = new ReservaData(con);
@@ -362,14 +365,14 @@ public class SesionReservaHuesped extends javax.swing.JInternalFrame {
 
         escritorio.removeAll();
         escritorio.repaint();
-        ReservaCliente log = new ReservaCliente();
+        ReservaCliente log = new ReservaCliente(this.id_huesped);
         int x = (escritorio.getWidth() / 2) - log.getWidth() / 2;
         int y = (escritorio.getHeight() / 2) - log.getHeight() / 2;
         log.setLocation(x, y);
         escritorio.add(log);
         log.toFront();
         log.setVisible(true);
-        
+
     }//GEN-LAST:event_btndescartarActionPerformed
 
     /**

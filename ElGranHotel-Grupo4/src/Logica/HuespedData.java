@@ -204,13 +204,11 @@ public class HuespedData {
    
     public Huesped buscarHuesped(String dni_huesped) {
         Huesped hues = new Huesped(); //Instancio un objeto tipo Huesped para almacenar los datos leidos
-        sql = "SELECT * FROM huesped WHERE dni = ? ";
+        sql = "SELECT * FROM huesped WHERE dni ="  + dni_huesped;
 
         try {
 
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, dni_huesped);
-            
+            Statement ps = con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
             
             //Si existe este huesped, entonces se ingresara al siguiente WHILE:
@@ -224,6 +222,7 @@ public class HuespedData {
                 hues.setTelefono(rs.getString("telefono"));
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
         return hues;
     }
