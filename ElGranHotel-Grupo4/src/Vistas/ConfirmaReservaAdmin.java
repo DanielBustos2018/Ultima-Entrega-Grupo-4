@@ -89,6 +89,8 @@ public class ConfirmaReservaAdmin extends javax.swing.JInternalFrame {
         //debo invertir la fecha para que en vez de mostrarse de la forma yyyy-mm-dd se muestre dd-mm-yyyy:
         String fechaen = new SimpleDateFormat("dd-MM-yyyy").format(res.getFecha_entrada());
         String fechasa = new SimpleDateFormat("dd-MM-yyyy").format(res.getFecha_salida());
+        lblfechallegada.setText("" + fechaen);
+        lblfechasalida.setText("" + fechasa);
         lbladultos.setText("" + this.adultos);
         lblniños.setText("" + this.niños);
         int noches = (int) (res.getImporte() / precio_noche);
