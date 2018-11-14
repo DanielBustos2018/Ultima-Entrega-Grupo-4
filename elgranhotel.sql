@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-10-2018 a las 17:58:12
--- Versión del servidor: 10.1.30-MariaDB
--- Versión de PHP: 7.2.1
+-- Tiempo de generación: 14-11-2018 a las 19:27:24
+-- Versión del servidor: 10.1.35-MariaDB
+-- Versión de PHP: 7.2.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -263,9 +263,9 @@ CREATE TABLE `huesped` (
 --
 
 INSERT INTO `huesped` (`id_huesped`, `nombre`, `apellido`, `dni`, `domicilio`, `correo`, `telefono`) VALUES
-(3, 'Daniel', 'Bustos', '34182784', 'El volcán san luis', 'daniel@gmail.com', '2664741423'),
-(23, 'Pedro', 'Perez', '12345678', 'B° 274', 'pedroperez@gmail.com', '2664123456'),
-(24, 'Alonso', 'Suarez', '33121290', 'Juana Koslay', 'salonso@hotmail.com', '2665345454');
+(1, 'Daniel', 'Bustos', '34182784', 'El volcán san luis', 'daniel@gmail.com', '2664741423'),
+(2, 'Pedro', 'Perez', '12345678', 'B° 274', 'pedroperez@gmail.com', '2664123456'),
+(3, 'Alonso', 'Suarez', '33121290', 'Juana Koslay', 'salonso@hotmail.com', '2665345454');
 
 -- --------------------------------------------------------
 
@@ -289,12 +289,12 @@ CREATE TABLE `reserva` (
 --
 
 INSERT INTO `reserva` (`id_reserva`, `id_huesped`, `id_habitacion`, `fecha_entrada`, `fecha_salida`, `cantidad_personas`, `importe`, `estado`) VALUES
-(15, 23, 105, '2018-10-29', '2018-11-07', 2, '19200', 1),
-(16, 24, 154, '2018-10-30', '2018-11-07', 4, '24500', 1),
-(17, 23, 1, '2018-10-29', '2018-10-31', 1, '1400', 1),
-(19, 23, 122, '2018-10-29', '2018-10-30', 2, '2400', 1),
-(20, 3, 121, '2018-10-29', '2018-10-31', 2, '4800', 1),
-(21, 23, 199, '2018-10-29', '2018-10-31', 2, '7000', 1);
+(1, 2, 105, '2018-10-29', '2018-11-07', 2, '19200', 1),
+(2, 3, 154, '2018-10-30', '2018-11-07', 4, '24500', 1),
+(3, 2, 1, '2018-10-29', '2018-10-31', 1, '1400', 1),
+(4, 2, 122, '2018-10-29', '2018-10-30', 2, '2400', 1),
+(5, 1, 121, '2018-10-29', '2018-10-31', 2, '4800', 1),
+(6, 2, 199, '2018-10-29', '2018-10-31', 2, '7000', 1);
 
 -- --------------------------------------------------------
 
@@ -331,7 +331,8 @@ INSERT INTO `tipos_de_habitacion` (`id_tipoHabitacion`, `tipo`, `capacidad`, `ca
 -- Indices de la tabla `habitacion`
 --
 ALTER TABLE `habitacion`
-  ADD PRIMARY KEY (`id_habitacion`);
+  ADD PRIMARY KEY (`id_habitacion`),
+  ADD KEY `id_tipoHabitacion` (`id_tipoHabitacion`);
 
 --
 -- Indices de la tabla `huesped`
@@ -343,7 +344,9 @@ ALTER TABLE `huesped`
 -- Indices de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  ADD PRIMARY KEY (`id_reserva`);
+  ADD PRIMARY KEY (`id_reserva`),
+  ADD KEY `id_huesped` (`id_huesped`),
+  ADD KEY `id_habitacion` (`id_habitacion`);
 
 --
 -- Indices de la tabla `tipos_de_habitacion`
@@ -365,7 +368,7 @@ ALTER TABLE `habitacion`
 -- AUTO_INCREMENT de la tabla `huesped`
 --
 ALTER TABLE `huesped`
-  MODIFY `id_huesped` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_huesped` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `reserva`
@@ -377,7 +380,24 @@ ALTER TABLE `reserva`
 -- AUTO_INCREMENT de la tabla `tipos_de_habitacion`
 --
 ALTER TABLE `tipos_de_habitacion`
-  MODIFY `id_tipoHabitacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_tipoHabitacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `habitacion`
+--
+ALTER TABLE `habitacion`
+  ADD CONSTRAINT `Tipo` FOREIGN KEY (`id_tipoHabitacion`) REFERENCES `tipos_de_habitacion` (`id_tipoHabitacion`);
+
+--
+-- Filtros para la tabla `reserva`
+--
+ALTER TABLE `reserva`
+  ADD CONSTRAINT `habitacion` FOREIGN KEY (`id_habitacion`) REFERENCES `habitacion` (`id_habitacion`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `huesped` FOREIGN KEY (`id_huesped`) REFERENCES `huesped` (`id_huesped`) ON DELETE NO ACTION ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
