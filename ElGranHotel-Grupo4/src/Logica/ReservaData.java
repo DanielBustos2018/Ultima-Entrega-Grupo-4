@@ -42,7 +42,7 @@ public class ReservaData {
 
         try {
             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, 999);
+            ps.setInt(1, 1);
             ps.setInt(2, nr.getId_habitacion());
             ps.setDate(3, nr.getFecha_entrada());
             ps.setDate(4, nr.getFecha_salida());

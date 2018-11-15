@@ -16,7 +16,7 @@ public class Huesped {
 
     public Huesped() {
     }
-
+    
     public Huesped(int id_huesped, String nombre, String apellido, String dni, String domicilio, String correo, String telefono) {
         this.id_huesped = id_huesped;
         this.nombre = nombre;
